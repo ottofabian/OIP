@@ -11,7 +11,7 @@ public class ParticleSwarm {
 
     public static final int C1 = 1;
     public static final int C2 = 2;
-    public static final int ITERATIONS = 1000;
+    public static final int ITERATIONS = 100;
 
     public class Particle{
 
@@ -84,10 +84,12 @@ public class ParticleSwarm {
         }
 
         public Vector<Double> multiplyVector(Vector<Double> x, double m){
+            Vector<Double> z = new Vector<Double>();
+
             for(int i = 0; i < x.size(); i++){
-                x.set(i, x.get(i) * m);
+                z.addElement(x.get(i) * m);
             }
-            return x;
+            return z;
         }
 
         public Vector<Double> addVectors(Vector<Double> x, Vector<Double> y){
