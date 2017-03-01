@@ -1,8 +1,4 @@
 package rabbitmq;
-/**
- * Connect to RabbitMQ
- * @author Alex
- */
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -46,6 +42,10 @@ public class Connector {
 		}
 	}
 	
+	/**
+	 * Get singleton instance of connector.
+	 * @return
+	 */
 	public static Connector getInstance() {
 		return instance;
 	}
@@ -64,6 +64,10 @@ public class Connector {
 		}
 	}
 
+	/**
+	 * Get channel.
+	 * @return
+	 */
 	public Channel getChannel() {
 		return channel;
 	}

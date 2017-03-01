@@ -1,10 +1,11 @@
 package rabbitmq;
 
 import java.io.IOException;
-import java.util.UUID;
-import java.util.Vector;
+import java.util.ArrayList;
 
-import org.json.JSONObject;
+import com.google.gson.Gson;
+
+import algorithms.SolutionCandidate;
 
 /**
  * Class Sender.
@@ -13,8 +14,8 @@ import org.json.JSONObject;
  *
  */
 public class Sender {
-	
 	private Connector connector;
+	private Gson gson;
 	
 	/**
 	 * Constructor.
@@ -22,6 +23,7 @@ public class Sender {
 	public Sender() {
 		// get instance of rabbitmq connector
 		connector = Connector.getInstance();
+		gson = new Gson();
 	}
 
 	/**
@@ -29,13 +31,14 @@ public class Sender {
 	 * @param x 
 	 * @return
 	 */
-	public void send(Vector<Double> x){
-		String id = UUID.randomUUID().toString();
-		String message = createMsg(id, x);
+	public void send(ArrayList<SolutionCandidate> solutionCandidates) {
 		try {
 			connector.getChannel().queueDeclare(Connector.INQUEUE, false, false, false, null);
-			connector.getChannel().basicPublish("", Connector.INQUEUE, null, message.getBytes());
-			System.out.println("Sent: " + message);
+			
+			for(SolutionCandidate c : solutionCandidates) {
+				String message = createMsg(c);
+				connector.getChannel().basicPublish("", Connector.INQUEUE, null, message.getBytes());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,11 +50,8 @@ public class Sender {
 	 * @param parameters
 	 * @return
 	 */
-	private static String createMsg(String id, Vector<Double> parameters){
-		JSONObject obj = new JSONObject();
-		obj.put("solutionCandidateId", id);
-		obj.put("solutionVector", parameters);
-		String msg = obj.toString();
+	private String createMsg(SolutionCandidate c){
+		String msg = gson.toJson(c);
 		return msg;
 	}	
 }
