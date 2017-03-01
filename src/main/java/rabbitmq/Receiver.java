@@ -23,6 +23,7 @@ public class Receiver implements Runnable {
 	private CountDownLatch latch;
 	private int length;
 	
+	// array list to store the results
 	private ArrayList<SolutionCandidate> results = new ArrayList<>();
 	
 	/**
@@ -53,11 +54,11 @@ public class Receiver implements Runnable {
 					String message = new String(body, "UTF-8");
 					results.add(gson.fromJson(message, SolutionCandidate.class));
 					
-					// TODO: compare length of sent candidates and received candidates
+					//check if all results have been received
 					if(results.size() == length) {
+						// disconnect receiver from queue
 						connector.getChannel().basicCancel(this.getConsumerTag());
-						
-						// TODO: wake up thread
+						// notify main thread
 						latch.countDown();			
 					}
 				}

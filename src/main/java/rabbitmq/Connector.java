@@ -53,7 +53,7 @@ public class Connector {
 	/**
 	 * Close connection to RabbitMQ.
 	 */
-	public void close(){
+	public void close() {
 		try {
 			this.channel.close();
 			this.connection.close();

@@ -15,91 +15,6 @@ import rabbitmq.Sender;
 @SuppressWarnings("all")
 public class GeneticAlgorithm {
 	
-//	/**
-//	 * Class Creature.
-//	 * @author Daniel
-//	 *
-//	 */
-//	public class Creature implements Comparable<Creature>{
-//		private ArrayList<Double> x;
-//		private double fitness;
-//		
-//		/**
-//		 * Constructor Creature.
-//		 * @param x
-//		 */
-//		public Creature(ArrayList<Double> x) {
-//			this.x = x;
-//			this.fitness = f(x);
-//		}
-//		
-//		/**
-//		 * Get x value.
-//		 * @return
-//		 */
-//		public ArrayList<Double> getX() {
-//			return this.x;
-//		}
-//		
-//		/**
-//		 * Get fitness value (= y value).
-//		 * @return
-//		 */
-//		public double getFitness() {
-//			return this.fitness;
-//		}
-//		
-//		/**
-//		 * Create a child creature.
-//		 * @param mate
-//		 * @return
-//		 */
-//		public Creature mate(Creature mate) {	
-//			ArrayList<Double> x = new ArrayList<>();
-//			
-//			// weighted avg: this.x * mate.fitness + mate.x * this.fitness / (sum(fitness))
-//			for(int i = 0; i < this.x.size(); i++) {
-//				x.add((this.x.get(i) * mate.getFitness() + mate.getX().get(i) * this.fitness)
-//				/ (mate.getFitness() + this.fitness));
-//			}
-//			return new Creature(x);
-//		}
-//
-//		@Override
-//		public int compareTo(Creature o) {
-//			return Double.compare(this.fitness, o.getFitness());
-//		}
-//		
-//		/**
-//		 * Rosenbrock Target function.
-//		 * @param x
-//		 * @return
-//		 */
-//		private double f(ArrayList<Double> x) {
-//			double sum = 0;
-//			
-//			for(int i = 0; i < (x.size() - 1); i++) {
-//				sum += 100 * Math.pow((x.get(i + 1) - Math.pow(x.get(i), 2)), 2)
-//					+ Math.pow((1 - x.get(i)), 2);
-//			}
-//			return sum;
-//		}
-//		
-//		/**
-//		 * Rastrigin Target function.
-//		 * @param x
-//		 * @return
-//		 */
-//		private double g(ArrayList<Double> x) {
-//			double sum = 10 * x.size();
-//			
-//			for(int i = 0; i < x.size(); i++) {
-//				sum += Math.pow(x.get(i), 2) - 10 * Math.cos(2 * Math.PI * x.get(i));
-//			}
-//			return sum;
-//		}
-//	}
-	
 	/**
 	 * Start the evolution.
 	 * @param pop (number of population members => 2^x)
@@ -130,22 +45,7 @@ public class GeneticAlgorithm {
 			}
 			System.out.println("Iteration: " + iter);
 			
-			// TODO: Call sender and receiver
-			new Sender().send(c);
-			
-			CountDownLatch latch = new CountDownLatch(1);
-			Receiver receiver = new Receiver(latch, pop);
-			new Thread(receiver).start();
-			
-			try {
-				// block call, wait for receiver
-				latch.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			c = receiver.getResults();
-			System.out.println("Received package");
+			c = sendAndWaitForResult(c, pop);
 			
 			Collections.sort(c);
 			iter--; 
@@ -175,12 +75,12 @@ public class GeneticAlgorithm {
 	}
 	
 	/**
-	 * Create a child creature.
+	 * Create a child solution candidate.
 	 * @param mateOne
 	 * @param mateTwo
 	 * @return
 	 */
-	public SolutionCandidate mate(SolutionCandidate mateOne, SolutionCandidate mateTwo) {	
+	private SolutionCandidate mate(SolutionCandidate mateOne, SolutionCandidate mateTwo) {	
 		ArrayList<Double> x = new ArrayList<>();
 		
 		// weighted average
@@ -193,4 +93,62 @@ public class GeneticAlgorithm {
 		}
 		return new SolutionCandidate(x);
 	}
+	
+	/**
+	 * Send solution candidates
+	 * to RabbitMQ and wait for result.
+	 * @param c
+	 * @param pop
+	 * @return
+	 */
+	private ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop) {
+		new Sender().send(c);
+		
+		CountDownLatch latch = new CountDownLatch(1);
+		Receiver receiver = new Receiver(latch, pop);
+		new Thread(receiver).start();
+		
+		try {
+			// block call, wait for receiver
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Received package");
+		return receiver.getResults();
+	}
+	
+	/*
+	 * Test functions.
+	 */
+	
+//	/**
+//	 * Rosenbrock function.
+//	 * @param x
+//	 * @return
+//	 */
+//	private double f(ArrayList<Double> x) {
+//		double sum = 0;
+//		
+//		for(int i = 0; i < (x.size() - 1); i++) {
+//			sum += 100 * Math.pow((x.get(i + 1) - Math.pow(x.get(i), 2)), 2)
+//				+ Math.pow((1 - x.get(i)), 2);
+//		}
+//		return sum;
+//	}
+//	
+//	/**
+//	 * Rastrigin function.
+//	 * @param x
+//	 * @return
+//	 */
+//	private double g(ArrayList<Double> x) {
+//		double sum = 10 * x.size();
+//		
+//		for(int i = 0; i < x.size(); i++) {
+//			sum += Math.pow(x.get(i), 2) - 10 * Math.cos(2 * Math.PI * x.get(i));
+//		}
+//		return sum;
+//	}
 }

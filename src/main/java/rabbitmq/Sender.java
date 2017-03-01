@@ -28,7 +28,7 @@ public class Sender {
 
 	/**
 	 * Send paramters to RabbitMQ.
-	 * @param x 
+	 * @param solutionCandidates
 	 * @return
 	 */
 	public void send(ArrayList<SolutionCandidate> solutionCandidates) {
@@ -46,8 +46,7 @@ public class Sender {
 	
 	/**
 	 * Create JSON object for message.
-	 * @param id
-	 * @param parameters
+	 * @param c
 	 * @return
 	 */
 	private String createMsg(SolutionCandidate c){

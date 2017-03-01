@@ -3,6 +3,11 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Class SolutionCandidate.
+ * @author Daniel, Alex
+ *
+ */
 public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	private String solutionCandidateId;
 	private ArrayList<Double> solutionVector;
@@ -22,6 +27,10 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	public int compareTo(SolutionCandidate o) {
 		return Double.compare(this.resultValue, o.getResultValue());
 	}
+	
+	/*
+	 * Getters and Setters.
+	 */
 
 	public String getSolutionCandidateId() {
 		return solutionCandidateId;
