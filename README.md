@@ -12,9 +12,11 @@
 
 ### Genetic Algorithm
 - [Documentation](/doc/Genetic_Algorithm.pdf)
-- [Code](/src/main/java/algorithms)
+- [Code](/src/main/java/algorithms/GeneticAlgorithm.java)
 
 
 ### Particle Swarm
-- [Documentation]()
-- [Code](https://github.com/DaWe1992/OIP/tree/master/src/main/java/algorithms/particleswarm)
+- [Code](/src/main/java/algorithms/particleswarm/ParticleSwarm.java)
+
+### Simulated Annealing
+- [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
