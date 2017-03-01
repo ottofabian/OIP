@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.particleswarm;
 
 
 import java.util.Vector;
@@ -6,15 +6,17 @@ import java.util.Vector;
 public class ParticleSwarm {
 
     public static Vector<Double> globalBest;
-    public static double globalBestFitness = 10000000;
+    public static double globalBestFitness = 1000000000;
+    public static Particle[] swarm = new Particle[10];
+
     public static final int C1 = 1;
     public static final int C2 = 2;
-    public static Particle[] swarm = new Particle[100];
+    public static final int ITERATIONS = 1000;
 
     public class Particle{
 
         private Vector<Double> position;
-        private double fitness;
+        private double fitness = 1000000000;
         private Vector<Double> localBest;
         private Vector<Double> velocity;
 
@@ -25,11 +27,20 @@ public class ParticleSwarm {
         }
 
         public void updateVelocity(){
-            velocity =  addVectors(velocity, addVectors(multiplyVector(subtractVector(localBest, position), (C1 * Math.random())),multiplyVector(subtractVector(globalBest, position) ,(C2 * Math.random()))));
+            velocity =  addVectors(velocity, addVectors(multiplyVector(subtractVector(localBest, position), (C1 * 0.7)),multiplyVector(subtractVector(globalBest, position) ,(C2 * 0.3))));
         }
 
         public void updatePosition(){
             position = addVectors(position, velocity);
+        }
+        
+        public void updateFitness(){
+        	double prevFitness = fitness;
+        	double newFitness = f(position);
+        	if(newFitness < prevFitness){
+        		localBest = position;
+        		fitness = newFitness;
+        	}
         }
 
         public Vector<Double> getPosition() {
@@ -65,9 +76,9 @@ public class ParticleSwarm {
         }
 
         public Vector<Double> subtractVector(Vector<Double> x, Vector<Double> y){
-            Vector<Double> z = new Vector<Double>(x.size());
+            Vector<Double> z = new Vector<Double>();
             for(int i = 0; i < x.size(); i++){
-                z.set(i, x.get(i) - y.get(i));
+                z.addElement(x.get(i) - y.get(i));
             }
             return z;
         }
@@ -82,9 +93,13 @@ public class ParticleSwarm {
         public Vector<Double> addVectors(Vector<Double> x, Vector<Double> y){
             Vector<Double> z = new Vector<Double>(x.size());
             for(int i = 0; i < x.size(); i++){
-                z.set(i, x.get(i) + y.get(i));
+                z.addElement(x.get(i) + y.get(i));
             }
             return z;
+        }
+        
+        public double f(Vector<Double> x){
+            return Math.pow(x.get(0),2);
         }
     }
 
@@ -92,26 +107,41 @@ public class ParticleSwarm {
 
         ParticleSwarm pw = new ParticleSwarm();
         pw.initSwarm();
-        System.out.println(globalBest + " " + globalBestFitness);
+        pw.letTheSwarmFly();
 
     }
 
     public void initSwarm(){
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < swarm.length; i++){
             Vector<Double> randomVector = new Vector<>();
-            randomVector.addElement(Math.random()*10-5);
+            randomVector.addElement(Math.random()*100000-50000);
             Particle p = new Particle(randomVector);
-            p.setFitness(f(p.getPosition()));
-            if(p.getFitness() < globalBestFitness){
-                globalBestFitness = p.getFitness();
-                globalBest = p.getPosition();
-            }
             swarm[i] = p;
+			//System.out.println("Position of particle " + i + " " + swarm[i].getPosition());
+
         }
     }
+    
+    public void letTheSwarmFly(){
+    	for(int i = 0; i < ITERATIONS; i++){
+    		for(int j = 0; j < swarm.length; j++){
+    			swarm[j].updateFitness();
+    		}
+    		
+    		for(int j = 0; j < swarm.length; j++){
+    			if(swarm[j].getFitness() < globalBestFitness){
+    				globalBestFitness = swarm[j].getFitness();
+    				globalBest = swarm[j].getPosition();
+    			}
+    		}
+    		
+    		System.out.println("Statistics from Iteration " + (i+1) + ": " + globalBest + " " + globalBestFitness);
 
-    public double f(Vector<Double> x){
-        return Math.pow(x.get(0),2);
+    		for(int j = 0; j < swarm.length; j++){
+    			swarm[j].updateVelocity();
+    			swarm[j].updatePosition();
+    			//System.out.println("Position of particle " + j + " " + swarm[j].getPosition() + " " + swarm[j].getFitness());
+    		}
+    	}
     }
-
 }
