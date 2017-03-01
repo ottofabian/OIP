@@ -16,6 +16,7 @@
 
 
 ### Particle Swarm
+- [Documentation](/doc/Particle Swarm Optimization.pdf)
 - [Code](/src/main/java/algorithms/particleswarm/ParticleSwarm.java)
 
 ### Simulated Annealing
