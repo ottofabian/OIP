@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 
+import rabbitmq.RabbitMqClient;
 import rabbitmq.Receiver;
 import rabbitmq.Sender;
 
@@ -45,8 +46,7 @@ public class GeneticAlgorithm {
 			}
 			System.out.println("Iteration: " + iter);
 			
-			c = sendAndWaitForResult(c, pop);
-			
+			c = RabbitMqClient.getInstance().sendAndWaitForResult(c, pop);
 			Collections.sort(c);
 			iter--; 
 		}
@@ -92,31 +92,6 @@ public class GeneticAlgorithm {
 			);
 		}
 		return new SolutionCandidate(x);
-	}
-	
-	/**
-	 * Send solution candidates
-	 * to RabbitMQ and wait for result.
-	 * @param c
-	 * @param pop
-	 * @return
-	 */
-	private ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop) {
-		new Sender().send(c);
-		
-		CountDownLatch latch = new CountDownLatch(1);
-		Receiver receiver = new Receiver(latch, pop);
-		new Thread(receiver).start();
-		
-		try {
-			// block call, wait for receiver
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("Received package");
-		return receiver.getResults();
 	}
 	
 	/*

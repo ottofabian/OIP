@@ -10,7 +10,7 @@ import algorithms.SolutionCandidate;
  */
 public class OIP_App {
 	public static void main(String[] args) {
-		SolutionCandidate c = new GeneticAlgorithm().evolve((int) Math.pow(2, 15), 0.2, 17, 100);
+		SolutionCandidate c = new GeneticAlgorithm().evolve((int) Math.pow(2, 10), 0.2, 17, 100);
 		System.out.println(c.getSolutionVector());
 		System.out.println(c.getResultValue());
 	}

@@ -25,6 +25,7 @@ public class Connector {
 	private final static Connector instance = new Connector();
 
 	/**
+	 * Private constructor.
 	 * Create RabbitMQ connector object.
 	 */
 	private Connector() {
