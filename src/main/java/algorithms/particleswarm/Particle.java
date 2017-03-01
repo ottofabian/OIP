@@ -13,19 +13,19 @@ public class Particle {
 	private ParticleSwarm swarm;
 	private Vector<Double> position;
 	private double fitness = 1000000000;
-	private Vector<Double> localBest;
+	private Vector<Double> particleBest;
 	private Vector<Double> velocity;
 
 	public Particle(Vector<Double> position, ParticleSwarm swarm) {
 		this.position = position;
-		this.localBest = position;
+		this.particleBest = position;
 		this.velocity = position;
 		this.swarm = swarm;
 	}
 
 	public void updateVelocity() {
-		velocity = addVectors(velocity, addVectors(multiplyVector(subtractVector(localBest, position), (swarm.getC1() * 0.7)),
-				multiplyVector(subtractVector(swarm.getGlobalBest(), position), (swarm.getC2() * 0.3))));
+		velocity = addVectors(velocity, addVectors(multiplyVector(subtractVector(particleBest, position), (swarm.getC1() * Math.random())),
+				multiplyVector(subtractVector(swarm.getGlobalBest(), position), (swarm.getC2() * Math.random()))));
 	}
 
 	public void updatePosition() {
@@ -33,10 +33,9 @@ public class Particle {
 	}
 
 	public void updateFitness() {
-		double prevFitness = fitness;
 		double newFitness = f(position);
-		if (newFitness < prevFitness) {
-			localBest = position;
+		if (newFitness < fitness) {
+			particleBest = position;
 			fitness = newFitness;
 		}
 	}
@@ -50,7 +49,7 @@ public class Particle {
 	}
 
 	public Vector<Double> getLocalBest() {
-		return localBest;
+		return particleBest;
 	}
 
 	public void setFitness(double fitness) {
@@ -58,7 +57,7 @@ public class Particle {
 	}
 
 	public void setLocalBest(Vector<Double> localBest) {
-		this.localBest = localBest;
+		this.particleBest = localBest;
 	}
 
 	public Vector<Double> getVelocity() {
@@ -87,6 +86,7 @@ public class Particle {
 		for (int i = 0; i < x.size(); i++) {
 			z.addElement(x.get(i) * m);
 		}
+
 		return z;
 	}
 

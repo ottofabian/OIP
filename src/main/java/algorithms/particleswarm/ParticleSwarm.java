@@ -4,7 +4,7 @@ import java.util.Vector;
 /**
  * Implementation of the Particle Swarm Algorithm
  * @author Philip & Gedeon
- *
+ * Comments incoming when bug is fixed
  */
 
 public class ParticleSwarm {
@@ -17,11 +17,9 @@ public class ParticleSwarm {
 	private int c2;
 
     public static void main(String[] args){
-
         ParticleSwarm pw = new ParticleSwarm(10, 100, 1, 2);
         pw.initSwarm();
         pw.letTheSwarmFly();
-
     }
     
     public ParticleSwarm(int iterations, int amountOfParticles, int c1, int c2){
@@ -31,9 +29,6 @@ public class ParticleSwarm {
     	this.c2 = c2;
     }
     
-    /**
-     * Initialize the whole swarm with random params
-     */
     public void initSwarm(){
         for(int i = 0; i < swarm.length; i++){
             Vector<Double> randomVector = new Vector<>();
@@ -90,6 +85,4 @@ public class ParticleSwarm {
 	public int getC2() {
 		return c2;
 	}
-    
-    
 }
