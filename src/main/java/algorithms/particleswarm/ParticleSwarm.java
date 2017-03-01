@@ -1,131 +1,51 @@
 package algorithms.particleswarm;
-
-
 import java.util.Vector;
+
+/**
+ * Implementation of the Particle Swarm Algorithm
+ * @author Philip & Gedeon
+ *
+ */
 
 public class ParticleSwarm {
 
-    public static Vector<Double> globalBest;
-    public static double globalBestFitness = 1000000000;
-    public static Particle[] swarm = new Particle[10];
-
-    public static final int C1 = 1;
-    public static final int C2 = 2;
-    public static final int ITERATIONS = 100;
-
-    public class Particle{
-
-        private Vector<Double> position;
-        private double fitness = 1000000000;
-        private Vector<Double> localBest;
-        private Vector<Double> velocity;
-
-        public Particle(Vector<Double> position){
-            this.position = position;
-            this.localBest = position;
-            this.velocity = position;
-        }
-
-        public void updateVelocity(){
-            velocity =  addVectors(velocity, addVectors(multiplyVector(subtractVector(localBest, position), (C1 * 0.7)),multiplyVector(subtractVector(globalBest, position) ,(C2 * 0.3))));
-        }
-
-        public void updatePosition(){
-            position = addVectors(position, velocity);
-        }
-        
-        public void updateFitness(){
-        	double prevFitness = fitness;
-        	double newFitness = f(position);
-        	if(newFitness < prevFitness){
-        		localBest = position;
-        		fitness = newFitness;
-        	}
-        }
-
-        public Vector<Double> getPosition() {
-            return position;
-        }
-
-        public double getFitness() {
-            return fitness;
-        }
-
-        public Vector<Double> getLocalBest() {
-            return localBest;
-        }
-
-        public void setFitness(double fitness){
-            this.fitness = fitness;
-        }
-
-        public void setLocalBest(Vector<Double> localBest) {
-            this.localBest = localBest;
-        }
-
-        public Vector<Double> getVelocity() {
-            return velocity;
-        }
-
-        public void setVelocity(Vector<Double> velocity) {
-            this.velocity = velocity;
-        }
-
-        public void setPosition(Vector<Double> position) {
-            this.position = position;
-        }
-
-        public Vector<Double> subtractVector(Vector<Double> x, Vector<Double> y){
-            Vector<Double> z = new Vector<Double>();
-            for(int i = 0; i < x.size(); i++){
-                z.addElement(x.get(i) - y.get(i));
-            }
-            return z;
-        }
-
-        public Vector<Double> multiplyVector(Vector<Double> x, double m){
-            Vector<Double> z = new Vector<Double>();
-
-            for(int i = 0; i < x.size(); i++){
-                z.addElement(x.get(i) * m);
-            }
-            return z;
-        }
-
-        public Vector<Double> addVectors(Vector<Double> x, Vector<Double> y){
-            Vector<Double> z = new Vector<Double>(x.size());
-            for(int i = 0; i < x.size(); i++){
-                z.addElement(x.get(i) + y.get(i));
-            }
-            return z;
-        }
-        
-        public double f(Vector<Double> x){
-            return Math.pow(x.get(0),2);
-        }
-    }
+	private Vector<Double> globalBest;
+	private double globalBestFitness = 1000000000;
+    private Particle[] swarm;
+    private int iterations = 100;
+	private int c1;
+	private int c2;
 
     public static void main(String[] args){
 
-        ParticleSwarm pw = new ParticleSwarm();
+        ParticleSwarm pw = new ParticleSwarm(10, 100, 1, 2);
         pw.initSwarm();
         pw.letTheSwarmFly();
 
     }
-
+    
+    public ParticleSwarm(int iterations, int amountOfParticles, int c1, int c2){
+    	this.iterations = iterations;
+    	this.swarm = new Particle[amountOfParticles];
+    	this.c1 = c1;
+    	this.c2 = c2;
+    }
+    
+    /**
+     * Initialize the whole swarm with random params
+     */
     public void initSwarm(){
         for(int i = 0; i < swarm.length; i++){
             Vector<Double> randomVector = new Vector<>();
             randomVector.addElement(Math.random()*100000-50000);
-            Particle p = new Particle(randomVector);
+            Particle p = new Particle(randomVector, this);
             swarm[i] = p;
 			//System.out.println("Position of particle " + i + " " + swarm[i].getPosition());
-
         }
     }
     
     public void letTheSwarmFly(){
-    	for(int i = 0; i < ITERATIONS; i++){
+    	for(int i = 0; i < iterations; i++){
     		for(int j = 0; j < swarm.length; j++){
     			swarm[j].updateFitness();
     		}
@@ -146,4 +66,30 @@ public class ParticleSwarm {
     		}
     	}
     }
+    
+    public double getGlobalBestFitness(){
+    	return this.globalBestFitness;
+    }
+
+	public Vector<Double> getGlobalBest() {
+		return globalBest;
+	}
+
+	public Particle[] getSwarm() {
+		return swarm;
+	}
+
+	public int getIterations() {
+		return iterations;
+	}
+
+	public int getC1() {
+		return c1;
+	}
+
+	public int getC2() {
+		return c2;
+	}
+    
+    
 }
