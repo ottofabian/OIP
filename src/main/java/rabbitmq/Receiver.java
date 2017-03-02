@@ -10,7 +10,7 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import algorithms.SolutionCandidate;
+import algorithms.DataContainer.SolutionCandidate;
 
 /**
  * Class Receiver.

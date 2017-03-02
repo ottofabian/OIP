@@ -1,20 +1,35 @@
-package algorithms;
+package algorithms.GeneticAlorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
+import algorithms.DataContainer.SolutionCandidate;
 import rabbitmq.Receiver;
 import rabbitmq.Sender;
 
 /**
  * Genetic algorithm.
- * @author Daniel
+ * @author Daniel, Fabian
  *
  */
 @SuppressWarnings("all")
 public class GeneticAlgorithm {
-	
+
+	private int UPPERLIMIT = 50;
+	private int LOWERLIMIT = UPPERLIMIT - 2*UPPERLIMIT;
+	private double MUTATION = 0.05;
+	//private double CROSSOVER = 0.8;
+	private double FEASIBLELIMIT = 0.75;
+	private boolean FEASIBLE = true;
+	// toDo: Has to be established as dynamic value
+	private final int ITERATIONS;
+
+	public GeneticAlgorithm(int iter){
+		ITERATIONS = iter;
+	}
+
 	/**
 	 * Start the evolution.
 	 * @param pop (number of population members => 2^x)
@@ -23,11 +38,14 @@ public class GeneticAlgorithm {
 	 * @para iter (number of iterations)
 	 * @return
 	 */
-	public SolutionCandidate evolve(int pop, double part_perc, int dim, int iter) {
-		
+	public SolutionCandidate evolve(int pop, double part_perc, int dim) {
+
 		// init population (first generation)
 		ArrayList<SolutionCandidate> c = initPopulation(pop, dim);
 		Collections.sort(c);
+
+		int iter = ITERATIONS;
+		Random r = new Random();
 		
 		// calculate partition index
 		int part_index = (int) (pop * part_perc);
@@ -38,17 +56,27 @@ public class GeneticAlgorithm {
 			
 			while(i < pop) {
 				for(int j = 0; j < part_index; j++) {
-					int rand = (int) (Math.random() * part_index);
-					c.set(i, mate(c.get(j), c.get(rand)));
+
+					// Random number for decision between mutation or crossover
+					if(r.nextInt(100) < MUTATION*100){
+						mutate(c.get(j),r);
+					}else {
+						int rand = (int) (Math.random() * part_index);
+						c.set(i, mate(c.get(j), c.get(rand)));
+					}
+
 					if(++i >= pop) break;
 				}
 			}
 			System.out.println("Iteration: " + iter);
-			
-			c = sendAndWaitForResult(c, pop);
+
+			c = sendAndWaitForResult(c, pop, iter);
 			
 			Collections.sort(c);
-			iter--; 
+			iter--;
+			if(iter < (ITERATIONS - (FEASIBLELIMIT*ITERATIONS))){
+				FEASIBLE = false;
+			}
 		}
 		return c.get(0);
 	}
@@ -66,7 +94,7 @@ public class GeneticAlgorithm {
 			// random vector x
 			ArrayList<Double> x = new ArrayList<>();
 			for(int j = 0; j < dim; j++) {
-				x.add((Math.random() * 100) - 50);
+				x.add((Math.random() * (UPPERLIMIT *2)) + LOWERLIMIT);
 			}
 			c.add(new SolutionCandidate(x));
 		}
@@ -93,6 +121,47 @@ public class GeneticAlgorithm {
 		}
 		return new SolutionCandidate(x);
 	}
+
+
+	/**
+	 * Mutate random values
+	 * @param c
+	 * @param mutationProbality
+	 * @return
+	 */
+	private SolutionCandidate mutate(SolutionCandidate c,Random r){
+
+		// toDo: Probably change amount of mutations
+
+		ArrayList<Double> t = c.getSolutionVector();
+		int elem = r.nextInt(t.size() + 1);
+
+		double gauss = next_gaussian(r);
+		double newValue = t.get(elem) + gauss;
+
+		if(newValue > UPPERLIMIT){
+			newValue = UPPERLIMIT;
+		}else if (newValue < LOWERLIMIT){
+			newValue = LOWERLIMIT;
+		}
+
+		t.set(elem, newValue);
+
+		return c;
+	}
+
+
+	/**
+	 * Random Gaussian value for Gaussian mutation
+	 * @return
+	 */
+	private double next_gaussian(Random r)
+	{
+		// ToDo: Adjust Gauss distribution
+		// Generate an initial [-1,1] gaussian distribution
+		// Quantize to step size 0.00001
+		return Math.rint((r.nextGaussian())* 100000.0) * 0.00001;
+	}
 	
 	/**
 	 * Send solution candidates
@@ -101,7 +170,7 @@ public class GeneticAlgorithm {
 	 * @param pop
 	 * @return
 	 */
-	private ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop) {
+	private ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop, int iter) {
 		new Sender().send(c);
 		
 		CountDownLatch latch = new CountDownLatch(1);
@@ -116,7 +185,18 @@ public class GeneticAlgorithm {
 		}
 		
 		System.out.println("Received package");
-		return receiver.getResults();
+		ArrayList<SolutionCandidate> list = receiver.getResults();
+
+		if(!FEASIBLE){
+			for(int i = 0; i < list.size(); i++){
+				SolutionCandidate elem = list.get(i);
+				if(!elem.isFeasible()){
+					elem.setResultValue(1000000);
+				}
+			}
+		}
+
+		return list;
 	}
 	
 	/*

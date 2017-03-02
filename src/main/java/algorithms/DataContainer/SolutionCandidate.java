@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.DataContainer;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -51,4 +51,9 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	public boolean isEvaluated() {
 		return isEvaluated;
 	}
+
+	public void setResultValue(double value) {
+		resultValue = value;
+	}
+
 }
