@@ -2,11 +2,8 @@ package algorithms;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.concurrent.CountDownLatch;
 
 import rabbitmq.RabbitMqClient;
-import rabbitmq.Receiver;
-import rabbitmq.Sender;
 
 /**
  * Genetic algorithm.
@@ -44,6 +41,7 @@ public class GeneticAlgorithm {
 					if(++i >= pop) break;
 				}
 			}
+			
 			System.out.println("Iteration: " + iter);
 			
 			c = RabbitMqClient.getInstance().sendAndWaitForResult(c, pop);
