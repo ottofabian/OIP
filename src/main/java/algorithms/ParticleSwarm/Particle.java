@@ -15,13 +15,12 @@ public class Particle {
 	private double fitness = 1000000000;
 	private Vector<Double> particleBest;
 	private Vector<Double> velocity;
+	private boolean feasible = true;
 
 	public Particle(Vector<Double> position, ParticleSwarm swarm) {
 		this.position = position;
 		this.particleBest = position;
 		this.velocity = position;
-		//Vector<Double> vec = new Vector<Double>();
-		//this.velocity = new Vector<Double>((Math.random()*3-1)), (Math.random()*3-1));
 		this.swarm = swarm;
 	}
 

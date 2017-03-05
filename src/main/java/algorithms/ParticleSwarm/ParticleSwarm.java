@@ -41,9 +41,11 @@ public class ParticleSwarm {
     
     public void letTheSwarmFly(){
     	for(int i = 0; i < iterations; i++){
-    		for(int j = 0; j < swarm.length; j++){
+    		/*for(int j = 0; j < swarm.length; j++){
     			swarm[j].updateFitness();
-    		}
+    		}*/
+    		
+    		
     		
     		for(int j = 0; j < swarm.length; j++){
     			if(swarm[j].getFitness() < globalBestFitness){
