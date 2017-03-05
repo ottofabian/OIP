@@ -1,4 +1,4 @@
-package algorithms.particleswarm;
+package algorithms.ParticleSwarm;
 
 import java.util.Vector;
 
@@ -20,6 +20,8 @@ public class Particle {
 		this.position = position;
 		this.particleBest = position;
 		this.velocity = position;
+		//Vector<Double> vec = new Vector<Double>();
+		//this.velocity = new Vector<Double>((Math.random()*3-1)), (Math.random()*3-1));
 		this.swarm = swarm;
 	}
 

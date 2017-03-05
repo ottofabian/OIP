@@ -1,4 +1,4 @@
-package algorithms.particleswarm;
+package algorithms.ParticleSwarm;
 import java.util.Vector;
 
 /**
@@ -12,12 +12,12 @@ public class ParticleSwarm {
 	private Vector<Double> globalBest;
 	private double globalBestFitness = 1000000000;
     private Particle[] swarm;
-    private int iterations = 100;
+    private int iterations;
 	private int c1;
 	private int c2;
 
     public static void main(String[] args){
-        ParticleSwarm pw = new ParticleSwarm(10, 100, 1, 2);
+        ParticleSwarm pw = new ParticleSwarm(10000, 10000, 1, 2);
         pw.initSwarm();
         pw.letTheSwarmFly();
     }
