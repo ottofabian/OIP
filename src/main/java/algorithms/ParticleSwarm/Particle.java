@@ -1,5 +1,6 @@
 package algorithms.ParticleSwarm;
 
+import java.util.UUID;
 import java.util.Vector;
 
 /**
@@ -15,13 +16,14 @@ public class Particle {
 	private double fitness = 1000000000;
 	private Vector<Double> particleBest;
 	private Vector<Double> velocity;
-	private boolean feasible = true;
-
+	private String solutionCandidateId;
+	
 	public Particle(Vector<Double> position, ParticleSwarm swarm) {
 		this.position = position;
 		this.particleBest = position;
 		this.velocity = position;
 		this.swarm = swarm;
+		this.solutionCandidateId = UUID.randomUUID().toString();
 	}
 
 	public void updateVelocity() {
@@ -48,7 +50,9 @@ public class Particle {
 	public double getFitness() {
 		return fitness;
 	}
-
+	public String getSolutionCandidateId(){
+		return solutionCandidateId;
+	}
 	public Vector<Double> getLocalBest() {
 		return particleBest;
 	}
