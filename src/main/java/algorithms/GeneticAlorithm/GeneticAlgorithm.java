@@ -15,12 +15,10 @@ import java.util.Random;
 @SuppressWarnings("all")
 public class GeneticAlgorithm {
 
-    // toDo: Has to be established as dynamic value
     private final int ITERATIONS;
-    private int UPPERLIMIT = 50;
-    private int LOWERLIMIT = UPPERLIMIT - 2 * UPPERLIMIT;
+    private int UPPERLIMIT = 10;
+    private int LOWERLIMIT = UPPERLIMIT / 2;
     private double MUTATION = 0.05;
-    //private double CROSSOVER = 0.8;
     private double FEASIBLELIMIT = 0.75;
     private boolean checkFeasible = false;
 
@@ -93,8 +91,8 @@ public class GeneticAlgorithm {
 			// random vector x
 			ArrayList<Double> x = new ArrayList<>();
 			for(int j = 0; j < dim; j++) {
-				x.add((Math.random() * 100) - 50);
-			}
+                x.add((Math.random() * UPPERLIMIT) - LOWERLIMIT);
+            }
 			c.add(new SolutionCandidate(x));
 		}
 		
@@ -111,7 +109,8 @@ public class GeneticAlgorithm {
 		ArrayList<Double> x = new ArrayList<>();
 		
 		// weighted average
-		for(int i = 0; i < mateOne.getSolutionVector().size(); i++) {
+        // toDo Maybe try different crossover with value exchange or the like.
+        for(int i = 0; i < mateOne.getSolutionVector().size(); i++) {
 			x.add(
 				(mateOne.getSolutionVector().get(i) * mateTwo.getResultValue()
 					+ mateTwo.getSolutionVector().get(i) * mateOne.getResultValue())
@@ -133,12 +132,12 @@ public class GeneticAlgorithm {
         // toDo: Probably change amount of mutations
 
         ArrayList<Double> t = c.getSolutionVector();
-        int elem = r.nextInt(t.size() + 1);
+        int elem = r.nextInt(t.size() - 1);
 
         double gauss = next_gaussian(r);
         double newValue = t.get(elem) + gauss;
 
-        if (newValue > UPPERLIMIT) {
+        if (newValue > UPPERLIMIT / 2) {
             newValue = UPPERLIMIT;
         } else if (newValue < LOWERLIMIT) {
             newValue = LOWERLIMIT;
@@ -158,7 +157,7 @@ public class GeneticAlgorithm {
         // ToDo: Adjust Gauss distribution
         // Generate an initial [-1,1] gaussian distribution
         // Quantize to step size 0.00001
-        return Math.rint((r.nextGaussian()) * 100000.0) * 0.00001;
+        return Math.rint((r.nextGaussian()) * 1000.0) * 0.001;
     }
 
 	/*

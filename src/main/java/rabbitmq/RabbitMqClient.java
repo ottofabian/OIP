@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * Class RabbitMqClient.
  * Encapsulates functionality to communicate
  * with the RabbitMQ queue.
- * @author Daniel
+ * @author Daniel, Fabian
  *
  */
 public class RabbitMqClient {

@@ -1,9 +1,10 @@
-package algorithms.particleswarm;
+package algorithms.ParticleSwarm;
+
+import algorithms.DataContainer.SolutionCandidate;
+import rabbitmq.RabbitMqClient;
 
 import java.util.ArrayList;
 import java.util.Vector;
-import algorithms.DataContainer.SolutionCandidate;
-import rabbitmq.RabbitMqClient;
 
 /**
  * Implementation of the Particle Swarm Algorithm
@@ -15,25 +16,25 @@ public class ParticleSwarm {
 
 	private Vector<Double> globalBest;
 	private double globalBestFitness = 1000000000;
-	private Particle[] swarm;
-	private ArrayList<SolutionCandidate> particleSolutions;
+    private algorithms.ParticleSwarm.Particle[] swarm;
+    private ArrayList<SolutionCandidate> particleSolutions;
 	private int iterations;
 	private int c1;
 	private int c2;
 
-	public static void main(String[] args) {
-		ParticleSwarm pw = new ParticleSwarm(1000, 10000, 1, 2);
-		pw.initSwarm();
-		pw.letTheSwarmFly();
-	}
-
 	public ParticleSwarm(int iterations, int amountOfParticles, int c1, int c2) {
 		this.iterations = iterations;
-		this.swarm = new Particle[amountOfParticles];
-		this.particleSolutions = new ArrayList<SolutionCandidate>();
+        this.swarm = new algorithms.ParticleSwarm.Particle[amountOfParticles];
+        this.particleSolutions = new ArrayList<SolutionCandidate>();
 		this.c1 = c1;
 		this.c2 = c2;
 	}
+
+    public static void main(String[] args) {
+        ParticleSwarm pw = new ParticleSwarm(1000, 10000, 1, 2);
+        pw.initSwarm();
+        pw.letTheSwarmFly();
+    }
 
 	public void initSwarm() {
 		for (int i = 0; i < swarm.length; i++) {
@@ -60,8 +61,9 @@ public class ParticleSwarm {
 			 * }
 			 */
 
-			particleSolutions = RabbitMqClient.getInstance().sendAndWaitForResult(particleSolutions, particleSolutions.size());
-			mapSwarmToSolutionCandidatesResults();
+            // toDo: Handle the Feasibility some how and add as third param
+            particleSolutions = RabbitMqClient.getInstance().sendAndWaitForResult(particleSolutions, particleSolutions.size(), false);
+            mapSwarmToSolutionCandidatesResults();
 
 			for (int j = 0; j < swarm.length; j++) {
 				if (swarm[j].getFitness() < globalBestFitness) {
