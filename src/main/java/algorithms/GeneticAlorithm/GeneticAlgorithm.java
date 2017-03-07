@@ -1,8 +1,9 @@
-package algorithms;
+package algorithms.GeneticAlorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import algorithms.DataContainer.SolutionCandidate;
 import rabbitmq.RabbitMqClient;
 
 /**

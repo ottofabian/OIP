@@ -3,7 +3,7 @@ package rabbitmq;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-import algorithms.SolutionCandidate;
+import algorithms.DataContainer.SolutionCandidate;
 
 /**
  * Class RabbitMqClient.

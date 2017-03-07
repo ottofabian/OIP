@@ -1,9 +1,22 @@
 bin/*
-.settings/*
-.project
-.classpath
-.DS_Store
-.idea
+
+# Source
 OIP.iml
 src/out
+
+# Eclipse
+.classpath
+.project
+.settings/*
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
 target/

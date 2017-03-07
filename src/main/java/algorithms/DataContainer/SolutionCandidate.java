@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.DataContainer;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -16,13 +16,20 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	private boolean isEvaluated;
 	
 	/**
-	 * Constructor.
+	 * Constructor for GeneticAlogorithm.
 	 */
 	public SolutionCandidate(ArrayList<Double> solutionVector) {
 		solutionCandidateId = UUID.randomUUID().toString();
 		this.solutionVector = solutionVector;
 	}
 	
+	/**
+	 * Constructor for PSO Algorithm.
+	 */
+	public SolutionCandidate(ArrayList<Double> solutionVector, String solutionCandidateId){
+		this.solutionCandidateId = solutionCandidateId;
+		this.solutionVector = solutionVector;
+	}
 	@Override
 	public int compareTo(SolutionCandidate o) {
 		return Double.compare(this.resultValue, o.getResultValue());
@@ -51,4 +58,9 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	public boolean isEvaluated() {
 		return isEvaluated;
 	}
+
+	public void setResultValue(double value) {
+		resultValue = value;
+	}
+
 }
