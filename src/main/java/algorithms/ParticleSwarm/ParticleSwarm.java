@@ -2,11 +2,8 @@ package algorithms.particleswarm;
 
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.concurrent.CountDownLatch;
-
 import algorithms.DataContainer.SolutionCandidate;
-import rabbitmq.Receiver;
-import rabbitmq.Sender;
+import rabbitmq.RabbitMqClient;
 
 /**
  * Implementation of the Particle Swarm Algorithm
@@ -63,7 +60,7 @@ public class ParticleSwarm {
 			 * }
 			 */
 
-			particleSolutions = sendAndWaitForResult(particleSolutions, particleSolutions.size(), i);
+			particleSolutions = RabbitMqClient.getInstance().sendAndWaitForResult(particleSolutions, particleSolutions.size());
 			mapSwarmToSolutionCandidatesResults();
 
 			for (int j = 0; j < swarm.length; j++) {
@@ -101,34 +98,6 @@ public class ParticleSwarm {
 		for(int i = 0; i < swarm.length; i++){
 			particleSolutions.add(new SolutionCandidate(new ArrayList<Double>(swarm[i].getPosition()), swarm[i].getSolutionCandidateId()));
 		}
-	}
-
-	private ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop, int iter) {
-		new Sender().send(c);
-
-		CountDownLatch latch = new CountDownLatch(1);
-		Receiver receiver = new Receiver(latch, pop);
-		new Thread(receiver).start();
-
-		try {
-			// block call, wait for receiver
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("Received package");
-		ArrayList<SolutionCandidate> list = receiver.getResults();
-
-		for (int i = 0; i < list.size(); i++) {
-			SolutionCandidate elem = list.get(i);
-			if (!elem.isFeasible()) {
-				elem.setResultValue(1000000);
-			}
-
-		}
-
-		return list;
 	}
 
 	public double getGlobalBestFitness() {
