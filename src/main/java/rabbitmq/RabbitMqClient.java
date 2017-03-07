@@ -1,9 +1,9 @@
 package rabbitmq;
 
+import algorithms.DataContainer.SolutionCandidate;
+
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
-
-import algorithms.DataContainer.SolutionCandidate;
 
 /**
  * Class RabbitMqClient.
@@ -35,7 +35,7 @@ public class RabbitMqClient {
 	 * @param pop
 	 * @return
 	 */
-	public ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop) {
+	public ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop, boolean checkFeasible) {
 		new Sender().send(c);
 		
 		CountDownLatch latch = new CountDownLatch(1);
@@ -48,6 +48,16 @@ public class RabbitMqClient {
 		} catch (InterruptedException e) {}
 		
 		System.out.println("Received package");
-		return receiver.getResults();
+		ArrayList<SolutionCandidate> list = receiver.getResults();
+
+		if (checkFeasible) {
+			for (int i = 0; i < list.size(); i++) {
+				SolutionCandidate elem = list.get(i);
+				if (!elem.isFeasible()) {
+					elem.setResultValue(1000000);
+				}
+			}
+		}
+		return list;
 	}
 }

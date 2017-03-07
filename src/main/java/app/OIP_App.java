@@ -1,7 +1,7 @@
 package app;
 
-import algorithms.GeneticAlorithm.GeneticAlgorithm;
 import algorithms.DataContainer.SolutionCandidate;
+import algorithms.GeneticAlorithm.GeneticAlgorithm;
 
 /**
  * Class OIP_App.
@@ -10,7 +10,7 @@ import algorithms.DataContainer.SolutionCandidate;
  */
 public class OIP_App {
 	public static void main(String[] args) {
-		SolutionCandidate c = new GeneticAlgorithm().evolve((int) Math.pow(2, 5), 0.2, 17, 100);
+		SolutionCandidate c = new GeneticAlgorithm(100).evolve((int) Math.pow(2, 5), 0.2, 17);
 		System.out.println(c.getSolutionVector());
 		System.out.println(c.getResultValue());
 	}
