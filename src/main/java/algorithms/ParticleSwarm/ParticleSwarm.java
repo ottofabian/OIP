@@ -1,4 +1,5 @@
-package algorithms.particleswarm;
+package algorithms.ParticleSwarm;
+
 
 import java.util.ArrayList;
 import java.util.Vector;
