@@ -1,10 +1,11 @@
 package algorithms.GeneticAlorithm;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import algorithms.DataContainer.SolutionCandidate;
 import rabbitmq.RabbitMqClient;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * Genetic algorithm.
@@ -13,7 +14,19 @@ import rabbitmq.RabbitMqClient;
  */
 @SuppressWarnings("all")
 public class GeneticAlgorithm {
-	
+
+    private final int ITERATIONS;
+    private int UPPERLIMIT = 10;
+    private int LOWERLIMIT = UPPERLIMIT / 2;
+    private double MUTATION = 0.05;
+    private double FEASIBLELIMIT = 0.75;
+    private boolean checkFeasible = false;
+
+
+    public GeneticAlgorithm(int iter) {
+        ITERATIONS = iter;
+    }
+
 	/**
 	 * Start the evolution.
 	 * @param pop (number of population members => 2^x)
@@ -22,14 +35,17 @@ public class GeneticAlgorithm {
 	 * @para iter (number of iterations)
 	 * @return
 	 */
-	public SolutionCandidate evolve(int pop, double part_perc, int dim, int iter) {
-		
-		// init population (first generation)
-		ArrayList<SolutionCandidate> c = initPopulation(pop, dim);
+    public SolutionCandidate evolve(int pop, double part_perc, int dim) {
+
+        // init population (first generation)
+        ArrayList<SolutionCandidate> c = initPopulation(pop, dim);
 		Collections.sort(c);
-		
-		// calculate partition index
-		int part_index = (int) (pop * part_perc);
+
+        int iter = ITERATIONS;
+        Random r = new Random();
+
+        // calculate partition index
+        int part_index = (int) (pop * part_perc);
 
 		// evolution
 		while(iter > 0) {
@@ -37,19 +53,29 @@ public class GeneticAlgorithm {
 			
 			while(i < pop) {
 				for(int j = 0; j < part_index; j++) {
-					int rand = (int) (Math.random() * part_index);
-					c.set(i, mate(c.get(j), c.get(rand)));
+
+                    // Random number for decision between mutation or crossover
+                    if (r.nextInt(100) < MUTATION * 100) {
+                        mutate(c.get(j), r);
+                    } else {
+                        int rand = (int) (Math.random() * part_index);
+                        c.set(i, mate(c.get(j), c.get(rand)));
+                    }
+
 					if(++i >= pop) break;
 				}
 			}
 			
 			System.out.println("Iteration: " + iter);
-			
-			c = RabbitMqClient.getInstance().sendAndWaitForResult(c, pop);
-			Collections.sort(c);
-			iter--; 
-		}
-		return c.get(0);
+
+            c = RabbitMqClient.getInstance().sendAndWaitForResult(c, pop, checkFeasible);
+            Collections.sort(c);
+            iter--;
+            if (iter < (ITERATIONS - (FEASIBLELIMIT * ITERATIONS))) {
+                checkFeasible = true;
+            }
+        }
+        return c.get(0);
 	}
 
 	/**
@@ -65,8 +91,8 @@ public class GeneticAlgorithm {
 			// random vector x
 			ArrayList<Double> x = new ArrayList<>();
 			for(int j = 0; j < dim; j++) {
-				x.add((Math.random() * 100) - 50);
-			}
+                x.add((Math.random() * UPPERLIMIT) - LOWERLIMIT);
+            }
 			c.add(new SolutionCandidate(x));
 		}
 		
@@ -83,7 +109,8 @@ public class GeneticAlgorithm {
 		ArrayList<Double> x = new ArrayList<>();
 		
 		// weighted average
-		for(int i = 0; i < mateOne.getSolutionVector().size(); i++) {
+        // toDo Maybe try different crossover with value exchange or the like.
+        for(int i = 0; i < mateOne.getSolutionVector().size(); i++) {
 			x.add(
 				(mateOne.getSolutionVector().get(i) * mateTwo.getResultValue()
 					+ mateTwo.getSolutionVector().get(i) * mateOne.getResultValue())
@@ -92,7 +119,47 @@ public class GeneticAlgorithm {
 		}
 		return new SolutionCandidate(x);
 	}
-	
+
+    /**
+     * Mutate random values
+     *
+     * @param c
+     * @param Random
+     * @return
+     */
+    private SolutionCandidate mutate(SolutionCandidate c, Random r) {
+
+        // toDo: Probably change amount of mutations
+
+        ArrayList<Double> t = c.getSolutionVector();
+        int elem = r.nextInt(t.size() - 1);
+
+        double gauss = next_gaussian(r);
+        double newValue = t.get(elem) + gauss;
+
+        if (newValue > UPPERLIMIT / 2) {
+            newValue = UPPERLIMIT;
+        } else if (newValue < LOWERLIMIT) {
+            newValue = LOWERLIMIT;
+        }
+
+        t.set(elem, newValue);
+
+        return c;
+    }
+
+    /**
+     * Random Gaussian value for Gaussian mutation
+     *
+     * @return
+     */
+    private double next_gaussian(Random r) {
+        // ToDo: Adjust Gauss distribution
+        // Generate an initial [-1,1] gaussian distribution
+        // Quantize to step size 0.00001
+        return Math.rint((r.nextGaussian()) * 1000.0) * 0.001;
+    }
+
 	/*
 	 * Test functions.
 	 */

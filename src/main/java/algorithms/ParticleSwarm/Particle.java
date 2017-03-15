@@ -1,6 +1,5 @@
 package algorithms.ParticleSwarm;
 
-
 import java.util.UUID;
 import java.util.Vector;
 
@@ -48,18 +47,24 @@ public class Particle {
 		return position;
 	}
 
+    public void setPosition(Vector<Double> position) {
+        this.position = position;
+    }
+
 	public double getFitness() {
 		return fitness;
 	}
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
+    }
+
 	public String getSolutionCandidateId(){
 		return solutionCandidateId;
 	}
-	public Vector<Double> getLocalBest() {
-		return particleBest;
-	}
 
-	public void setFitness(double fitness) {
-		this.fitness = fitness;
+    public Vector<Double> getLocalBest() {
+		return particleBest;
 	}
 
 	public void setLocalBest(Vector<Double> localBest) {
@@ -72,10 +77,6 @@ public class Particle {
 
 	public void setVelocity(Vector<Double> velocity) {
 		this.velocity = velocity;
-	}
-
-	public void setPosition(Vector<Double> position) {
-		this.position = position;
 	}
 
 	public Vector<Double> subtractVector(Vector<Double> x, Vector<Double> y) {
