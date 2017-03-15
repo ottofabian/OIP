@@ -16,9 +16,9 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	private boolean isEvaluated;
 	
 	/**
-	 * Constructor for GeneticAlogorithm.
-	 */
-	public SolutionCandidate(ArrayList<Double> solutionVector) {
+     * Constructor for GeneticAlgorithm.
+     */
+    public SolutionCandidate(ArrayList<Double> solutionVector) {
 		solutionCandidateId = UUID.randomUUID().toString();
 		this.solutionVector = solutionVector;
 	}
@@ -51,16 +51,16 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 		return resultValue;
 	}
 
+    public void setResultValue(double value) {
+        resultValue = value;
+    }
+
 	public boolean isFeasible() {
 		return isFeasible;
 	}
 
 	public boolean isEvaluated() {
 		return isEvaluated;
-	}
-
-	public void setResultValue(double value) {
-		resultValue = value;
 	}
 
 }
