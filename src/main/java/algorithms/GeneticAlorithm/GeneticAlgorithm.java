@@ -16,7 +16,7 @@ import java.util.Random;
 public class GeneticAlgorithm {
 
     private final int ITERATIONS;
-    private int UPPERLIMIT = 10;
+    private int UPPERLIMIT = 20000;
     private int LOWERLIMIT = UPPERLIMIT / 2;
     private double MUTATION = 0.05;
     private double FEASIBLELIMIT = 0.75;

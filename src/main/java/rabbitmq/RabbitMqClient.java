@@ -50,14 +50,24 @@ public class RabbitMqClient {
 		System.out.println("Received package");
 		ArrayList<SolutionCandidate> list = receiver.getResults();
 
-		if (checkFeasible) {
-			for (int i = 0; i < list.size(); i++) {
-				SolutionCandidate elem = list.get(i);
-				if (!elem.isFeasible()) {
-					elem.setResultValue(1000000);
-				}
-			}
-		}
+        if (checkFeasible) {
+            for (int i = 0; i < list.size(); i++) {
+                SolutionCandidate elem = list.get(i);
+                if (!elem.isFeasible()) {
+                    elem.setResultValue(1000000);
+                }
+            }
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                SolutionCandidate elem = list.get(i);
+                if (elem.isFeasible()) {
+                    System.out.println("Feasible value found:");
+                    System.out.println(elem.getSolutionVector());
+                    System.out.println(elem.getResultValue());
+                    System.out.println(elem.isFeasible());
+                }
+            }
+        }
 		return list;
 	}
 }
