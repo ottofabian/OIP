@@ -21,3 +21,25 @@
 
 ### Simulated Annealing
 - [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
+
+## Validation
+
+## Rosenbrock
+- FTYPE: 1
+- Minimum: 0
+- Interval: [-5,+5]
+
+## Reichwald
+- FTYPE: 2
+- Minimum: ?
+- Interval: [-5,+5]
+
+## Rastrigin
+- FTYPE: 3
+- Minimum: 0
+- Interval: [-5,+5]
+
+## Styblinski-Tang
+- FTYPE: 4
+- Minimum: -39.16617 * n < ... < 39.16616 * n
+- Interval: [-5,+5]
