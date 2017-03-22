@@ -198,7 +198,8 @@ public class GeneticAlgorithm {
     	ArrayList<Double> sv = c.getSolutionVector();
     	
     	//Generate n uniformly distributed random numbers
-    	List<Integer> pos = Stream.generate(() -> (int) (Math.random() * DIMENSION))
+    	List<Integer> pos = Stream
+			.generate(() -> (int) (Math.random() * DIMENSION))
     		.distinct()
     		.limit(n)
     		.collect(Collectors.toList());
