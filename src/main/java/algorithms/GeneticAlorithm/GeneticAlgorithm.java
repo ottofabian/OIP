@@ -1,6 +1,7 @@
 package algorithms.GeneticAlorithm;
 
 import algorithms.DataContainer.SolutionCandidate;
+import algorithms.Validation.Validation;
 import rabbitmq.RabbitMqClient;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class GeneticAlgorithm {
     private double MUTATION = 0.05;
     private double FEASIBLELIMIT = 0.75;
     private boolean checkFeasible = false;
+    private final static int FTYPE = 1;
 
 
     public GeneticAlgorithm(int iter) {
@@ -75,6 +77,7 @@ public class GeneticAlgorithm {
                 checkFeasible = true;
             }
         }
+		System.out.println("Distance: " + Validation.validate(c.get(0).getResultValue(), FTYPE));
         return c.get(0);
 	}
 

@@ -1,4 +1,4 @@
-package algorithms.ParticleSwarm;
+package algorithms.particleswarm;
 
 import java.util.UUID;
 import java.util.Vector;

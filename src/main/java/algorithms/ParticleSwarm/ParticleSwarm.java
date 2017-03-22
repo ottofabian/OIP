@@ -1,6 +1,7 @@
-package algorithms.ParticleSwarm;
+package algorithms.particleswarm;
 
 import algorithms.DataContainer.SolutionCandidate;
+import algorithms.Validation.Validation;
 import rabbitmq.RabbitMqClient;
 
 import java.util.ArrayList;
@@ -16,15 +17,16 @@ public class ParticleSwarm {
 
 	private Vector<Double> globalBest;
 	private double globalBestFitness = 1000000000;
-    private algorithms.ParticleSwarm.Particle[] swarm;
+    private Particle[] swarm;
     private ArrayList<SolutionCandidate> particleSolutions;
 	private int iterations;
 	private int c1;
 	private int c2;
+	private final static int FTYPE = 1;
 
 	public ParticleSwarm(int iterations, int amountOfParticles, int c1, int c2) {
 		this.iterations = iterations;
-        this.swarm = new algorithms.ParticleSwarm.Particle[amountOfParticles];
+        this.swarm = new Particle[amountOfParticles];
         this.particleSolutions = new ArrayList<SolutionCandidate>();
 		this.c1 = c1;
 		this.c2 = c2;
@@ -83,6 +85,9 @@ public class ParticleSwarm {
 			
 			mapSwarmToSolutionCandidates();
 		}
+		
+		// here is end
+		System.out.println("Distance: " + Validation.validate(globalBestFitness, FTYPE));
 	}
 
 	private void mapSwarmToSolutionCandidatesResults() {
