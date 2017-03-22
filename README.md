@@ -41,5 +41,5 @@
 
 ## Styblinski-Tang
 - FTYPE: 4
-- Minimum: -39.16617 * n < ... < 39.16616 * n
+- Minimum: -39.16617 * n < ... < -39.16616 * n
 - Interval: [-5,+5]
