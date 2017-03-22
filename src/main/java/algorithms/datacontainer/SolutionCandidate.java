@@ -1,4 +1,4 @@
-package algorithms.DataContainer;
+package algorithms.datacontainer;
 
 import java.util.ArrayList;
 import java.util.UUID;

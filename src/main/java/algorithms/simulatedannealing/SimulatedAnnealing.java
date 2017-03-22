@@ -1,4 +1,4 @@
-package algorithms.SimulatedAnnealing;
+package algorithms.simulatedannealing;
 
 /**
  * Simulated Annealing.

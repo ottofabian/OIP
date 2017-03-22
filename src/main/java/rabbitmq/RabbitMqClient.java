@@ -1,9 +1,9 @@
 package rabbitmq;
 
-import algorithms.DataContainer.SolutionCandidate;
-
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
+
+import algorithms.datacontainer.SolutionCandidate;
 
 /**
  * Class RabbitMqClient.

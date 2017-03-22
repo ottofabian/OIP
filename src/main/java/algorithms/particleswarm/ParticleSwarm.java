@@ -1,7 +1,7 @@
 package algorithms.particleswarm;
 
-import algorithms.DataContainer.SolutionCandidate;
-import algorithms.Validation.Validation;
+import algorithms.datacontainer.SolutionCandidate;
+import algorithms.validation.Validation;
 import rabbitmq.RabbitMqClient;
 
 import java.util.ArrayList;

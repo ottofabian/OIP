@@ -1,4 +1,4 @@
-package algorithms.Validation;
+package algorithms.validation;
 
 public class Validation {
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
-import algorithms.DataContainer.SolutionCandidate;
+import algorithms.datacontainer.SolutionCandidate;
 
 /**
  * Class Sender.
