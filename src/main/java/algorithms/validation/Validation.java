@@ -12,12 +12,13 @@ public class Validation {
 	public static double validate(double fv, int type){
 		switch (type) {
 		case 1:
-			return Math.abs(fv-ROSENBROCK);
+			return Math.abs(fv - ROSENBROCK);
 		case 3:
-			return Math.abs(fv-RASTRIGIN);
+			return Math.abs(fv - RASTRIGIN);
 		case 4:
-			return Math.abs(fv-styblinskiTang(17));
+			return Math.abs(fv - styblinskiTang(17));
 		}
+		
 		return -1.0;
 	}
 }
