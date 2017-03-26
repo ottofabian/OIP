@@ -10,10 +10,12 @@ import algorithms.geneticalgorithm.GeneticAlgorithm;
  */
 public class OIP_App {
 	public static void main(String[] args) {
-		SolutionCandidate c = new GeneticAlgorithm(1000, 17).evolve((int) Math.pow(2, 12), 0.4);
-		System.out.println(c.getSolutionVector());
-		System.out.println(c.getResultValue());
-		System.out.println(c.isFeasible());
+		//while(true) {
+		SolutionCandidate c = new GeneticAlgorithm(10000, 17).evolveOR((int) Math.pow(2, 10), 0.3);
+		System.out.println("Best solution vector: " + c.getSolutionVector());
+		System.out.println("According f(x): " + c.getResultValue());
+		System.out.println("Feasibility: " + c.isFeasible());
+		//}
 
 	}
 }

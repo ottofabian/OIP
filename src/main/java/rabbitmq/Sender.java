@@ -1,11 +1,9 @@
 package rabbitmq;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
+import algorithms.datacontainer.SolutionCandidate;
 import com.google.gson.Gson;
 
-import algorithms.datacontainer.SolutionCandidate;
+import java.util.ArrayList;
 
 /**
  * Class Sender.
@@ -32,15 +30,21 @@ public class Sender {
 	 * @return
 	 */
 	public void send(ArrayList<SolutionCandidate> solutionCandidates) {
-		try {
+        //int stop = 0;
+        try {
 			connector.getChannel().queueDeclare(Connector.INQUEUE, false, false, false, null);
 			
 			for(SolutionCandidate c : solutionCandidates) {
 				String message = createMsg(c);
 				connector.getChannel().basicPublish("", Connector.INQUEUE, null, message.getBytes());
+                /*stop++;
+				if(stop == 15900){
+					sleep(2000);
+					stop = 0;
+				}*/
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
 		}
 	}
 	
