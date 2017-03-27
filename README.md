@@ -1,5 +1,11 @@
-# Optimization of industrial processes
+# Optimization of industrial processes WWI 14SEA
 
+Group members:
+- Alexander Baum
+- Gedeon Moritz
+- Philip Riecks
+- Fabian Otto
+- Daniel Wehner
 
 ## Docker
 - https://hub.docker.com/r/jreichwald/dhbw_oip/
@@ -10,10 +16,11 @@
   
 ## Algorithms
 
+Three algorithms were contemplated:
+
 ### Genetic Algorithm
 - [Documentation](/doc/Genetic_Algorithm.pdf)
 - [Code](/src/main/java/algorithms/GeneticAlgorithm.java)
-
 
 ### Particle Swarm
 - [Documentation](/doc/Particle_Swarm_Algorithm.pdf)
@@ -24,9 +31,11 @@
 
 ## Results
 
+The best values found for each function can be found here:
+
 - [Results](https://github.com/DaWe1992/OIP/blob/master/results)
 
-## Validation
+## Validation/Optimal values
 
 ### Rosenbrock
 - FTYPE: 1
