@@ -24,7 +24,7 @@
 
 ### Results
 
-- [Results] (results.txt)
+- [Results](results.txt)
 
 ### Validation
 
