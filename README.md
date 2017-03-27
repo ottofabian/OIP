@@ -20,7 +20,7 @@
 - [Code](/src/main/java/algorithms/particleswarm/ParticleSwarm.java)
 
 ### Simulated Annealing
-- [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
+- [Code](/src/main/java/algorithms/simulatedannealing/SimulatedAnnealing.java)
 
 ## Results
 
