@@ -24,7 +24,7 @@
 
 ## Results
 
-- [Results](results.txt)
+- [Results](https://github.com/DaWe1992/OIP/blob/master/results)
 
 ## Validation
 
