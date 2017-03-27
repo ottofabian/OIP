@@ -1,4 +1,4 @@
-# Optimierung industrieller Prozesse
+# Optimization of industrial processes
 
 
 ## Docker
@@ -22,11 +22,11 @@
 ### Simulated Annealing
 - [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
 
-### Results
+## Results
 
 - [Results](results.txt)
 
-### Validation
+## Validation
 
 ## Rosenbrock
 - FTYPE: 1
