@@ -22,7 +22,11 @@
 ### Simulated Annealing
 - [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
 
-## Validation
+### Results
+
+- [Best Results] /Best%20result%20values%20and%20params.txt
+
+### Validation
 
 ## Rosenbrock
 - FTYPE: 1
