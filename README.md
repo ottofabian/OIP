@@ -24,7 +24,7 @@
 
 ### Results
 
-- [Best Results] (Best result values and params.txt)
+- [Results] (results.txt)
 
 ### Validation
 
