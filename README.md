@@ -31,7 +31,7 @@ Three algorithms were contemplated:
 
 ## Results
 
-The best values found for each function can be found here:
+The best values found for each function can be viewed here:
 
 - [Results](https://github.com/DaWe1992/OIP/blob/master/results)
 
