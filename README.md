@@ -1,5 +1,11 @@
-# Optimierung industrieller Prozesse
+# Optimization of industrial processes WWI 14SEA
 
+Group members:
+- Alexander Baum
+- Gedeon Moritz
+- Philip Riecks
+- Fabian Otto
+- Daniel Wehner
 
 ## Docker
 - https://hub.docker.com/r/jreichwald/dhbw_oip/
@@ -10,36 +16,43 @@
   
 ## Algorithms
 
+Three algorithms were contemplated:
+
 ### Genetic Algorithm
 - [Documentation](/doc/Genetic_Algorithm.pdf)
 - [Code](/src/main/java/algorithms/GeneticAlgorithm.java)
 
-
 ### Particle Swarm
-- [Documentation](/doc/Particle Swarm Optimization.pdf)
+- [Documentation](/doc/Particle_Swarm_Algorithm.pdf)
 - [Code](/src/main/java/algorithms/particleswarm/ParticleSwarm.java)
 
 ### Simulated Annealing
-- [Code](/src/main/java/algorithms/SimulatedAnnealing.java)
+- [Code](/src/main/java/algorithms/simulatedannealing/SimulatedAnnealing.java)
 
-## Validation
+## Results
 
-## Rosenbrock
+The best values found for each function can be viewed here:
+
+- [Results](https://github.com/DaWe1992/OIP/blob/master/results)
+
+## Validation/Optimal values
+
+### Rosenbrock
 - FTYPE: 1
 - Minimum: 0
 - Interval: [-5,+5]
 
-## Reichwald
+### Reichwald
 - FTYPE: 2
 - Minimum: ?
 - Interval: [-5,+5]
 
-## Rastrigin
+### Rastrigin
 - FTYPE: 3
 - Minimum: 0
 - Interval: [-5,+5]
 
-## Styblinski-Tang
+### Styblinski-Tang
 - FTYPE: 4
 - Minimum: -39.16617 * n < ... < -39.16616 * n
 - Interval: [-5,+5]
