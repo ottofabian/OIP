@@ -55,15 +55,6 @@ public class RabbitMqClient {
 				SolutionCandidate elem = list.get(i);
 				if (!elem.isFeasible()) {
 					elem.setResultValue(1000000);
-				} else {
-					elem.setResultValue(elem.getResultValue() - 1000000);
-				}
-			}
-		} else {
-			for (int i = 0; i < list.size(); i++) {
-				SolutionCandidate elem = list.get(i);
-				if (elem.isFeasible()) {
-					elem.setResultValue(elem.getResultValue() - 1000000);
 				}
 			}
 		}
