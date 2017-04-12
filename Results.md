@@ -2,6 +2,9 @@
 
 ## Algorthims
 - [Rosenbrock](#rosenbrock)
+- [Reichwald](#reichwald)
+- [Rastrigin](#rastrigin)
+- [Styblinski-Tang](#styblinski-tang)
 
 ## Rosenbrock
 - FTYPE: `1`
@@ -46,17 +49,16 @@
   - mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
 
 ---
-FTYPE: 4
+## Styblinski-Tang
 
-Distance: 1.0864232956464548E-4
-Best solution vector: [-2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117]
-According f(x): -665.8247813576704
-Feasibility: true
-
-Variables:
-
-private double MUTATION = 0.1;
-private int MUTATIONS_PER_CREATURE = 6;
-SolutionCandidate c = new GeneticAlgorithm(300, 17).evolveOR((int) Math.pow(2, 10), 0.25);
-SolutionCandidate sc = mateXover(c.get(j), c.get(rand));
-mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
+- FTYPE: `4`
+- Distance: `1.0864232956464548E-4`
+- Best solution vector: `[-2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117, -2.9031859722600117]`
+- According f(x): `-665.8247813576704`
+- Feasibility: `true`
+- Variables:
+  - private double MUTATION = `0.1`;
+  - private int MUTATIONS_PER_CREATURE = `6`;
+  - SolutionCandidate c = new GeneticAlgorithm(300, 17).evolveOR((int) Math.pow(2, 10), 0.25);
+  - SolutionCandidate sc = mateXover(c.get(j), c.get(rand));
+  - mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
