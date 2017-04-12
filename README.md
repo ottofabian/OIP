@@ -2,7 +2,11 @@
 
 ## Overview
 
-- (Group members)[#group-members)
+- [Group members](#group-members)
+- [Docker](#docker)
+- [Algorithms](#algorithms)
+- [Results](#results)
+- [Validation/Optimal values](#validation/Optimal-values)
 
 ## Group members:
 - Alexander Baum
