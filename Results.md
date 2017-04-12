@@ -9,6 +9,7 @@
 ---
 
 ## Rosenbrock
+### Genetic Result
 - FTYPE: `1`
 - Distance: `6.063562737341757`
 - Best solution vector: `[0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9270101074449641, 0.9074224141254552, 0.8412666283154362, 0.7410040524275487, 0.5329871309742966]`
@@ -21,6 +22,17 @@
   - SolutionCandidate sc = mateXoverRandom(c.get(j), c.get(rand)));
   - mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
 
+### ParticleSwarm Result
+- FTYPE: `1`
+- Distance: `3.3966216191171715E-5`
+- Best solution vector: `[0.9966014132516507, 0.9936878304230561]`
+- According f(x): `3.3966216191171715E-5`
+- Feasibility: `true`
+- Variables:
+  - private int c1 = `1`
+  - private int c2 = `2`
+  - iterations int = 100;
+  - amountOfParicles int = 1000;
 
 ---
 ## Reichwald
