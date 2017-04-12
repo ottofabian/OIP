@@ -1,10 +1,12 @@
 # Results
 
-## Algorthims
+## Algorithms
 - [Rosenbrock](#rosenbrock)
 - [Reichwald](#reichwald)
 - [Rastrigin](#rastrigin)
 - [Styblinski-Tang](#styblinski-tang)
+
+---
 
 ## Rosenbrock
 - FTYPE: `1`
