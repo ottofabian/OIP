@@ -8,6 +8,7 @@
 - [Results](#results)
 - [Validation/Optimal values](#validationoptimal-values)
 
+---
 ## Group members:
 - [Alexander Baum](https://github.com/4lexBaum)
 - [Gedeon Moritz](https://github.com/GedeonMoritz)
