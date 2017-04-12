@@ -1,19 +1,25 @@
 # Optimization of industrial processes WWI 14SEA
 
-Group members:
+## Overview
+
+- (Group members)[#group-members)
+
+## Group members:
 - Alexander Baum
 - Gedeon Moritz
 - Philip Riecks
 - Fabian Otto
 - Daniel Wehner
 
+---
 ## Docker
 - https://hub.docker.com/r/jreichwald/dhbw_oip/
 - [docker-compose.yml](docker-compose.yml)
 - [RabbitMQ Client](http://127.0.0.1:15672/)
   - User: guest
   - Password: guest
-  
+
+---
 ## Algorithms
 
 Three algorithms were contemplated:
@@ -29,12 +35,14 @@ Three algorithms were contemplated:
 ### Simulated Annealing
 - [Code](/src/main/java/algorithms/simulatedannealing/SimulatedAnnealing.java)
 
+---
 ## Results
 
 The best values found for each function can be viewed here:
 
 - [Results](https://github.com/DaWe1992/OIP/blob/master/Results.md)
 
+---
 ## Validation/Optimal values
 
 ### Rosenbrock
