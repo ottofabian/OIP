@@ -29,8 +29,8 @@
 - According f(x): `3.3966216191171715E-5`
 - Feasibility: `true`
 - Variables:
-  - private int c1 = `1`
-  - private int c2 = `2`
+  - private int c1 = `1`;
+  - private int c2 = `2`;
   - iterations int = 100;
   - amountOfParicles int = 1000;
 
