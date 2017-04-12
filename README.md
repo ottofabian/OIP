@@ -6,7 +6,7 @@
 - [Docker](#docker)
 - [Algorithms](#algorithms)
 - [Results](#results)
-- [Validation/Optimal values](#validation/Optimal-values)
+- [Validation/Optimal values](#validationoptimal-values)
 
 ## Group members:
 - Alexander Baum
@@ -42,9 +42,7 @@ Three algorithms were contemplated:
 ---
 ## Results
 
-The best values found for each function can be viewed here:
-
-- [Results](https://github.com/DaWe1992/OIP/blob/master/Results.md)
+The best values found for each function can be viewed here [Results](https://github.com/DaWe1992/OIP/blob/master/Results.md)
 
 ---
 ## Validation/Optimal values
