@@ -31,11 +31,12 @@
 - Variables:
   - private int c1 = `1`;
   - private int c2 = `2`;
-  - iterations int = 100;
-  - amountOfParicles int = 1000;
+  - iterations int = `100`;
+  - amountOfParticles int = `1000`;
 
 ---
 ## Reichwald
+### Genetic Result
 - FTYPE: `2`
 - Best solution vector: `[0.8237783384896942, 0.3518892063520629, 0.9109868547459707, 0.2444912907568737, 0.2250453742414631, 0.5269987710239545, 0.6336547184838799, 0.13094444432211771, 0.04700293982106696, 0.05395867963736878, 1.1233258944999869, 0.47344365464473204, 0.26759786383082274, 1.5721195312664522, 1.2428699555231855, 1.3576547910272112, 1.9036254679196905]`
 - According f(x): `26.760134619286482`
@@ -46,6 +47,17 @@
   - SolutionCandidate c = new GeneticAlgorithm(5000, 17).evolveXOR((int) Math.pow(2, 11), 0.25);
   - sc = mateAvg(c.get(j), c.get(rand));
   - sc = mutateRandom(sc, MUTATIONS_PER_CREATURE);
+  
+### ParticleSwarm Result
+- FTYPE: `2`
+- Best solution vector: `[0.9966014132516507, 0.9936878304230561]`
+- According f(x): `26.760`
+- Feasibility: `true`
+- Variables:
+  - private int c1 = `1`;
+  - private int c2 = `2`;
+  - iterations int = 100;
+  - amountOfParticles int = 1000;
 
 ---
 ## Rastrigin
