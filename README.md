@@ -1,4 +1,4 @@
-# Optimization of industrial processes WWI 14SEA
+# Optimization of industrial processes WI 14 SE A
 
 ## Overview
 
