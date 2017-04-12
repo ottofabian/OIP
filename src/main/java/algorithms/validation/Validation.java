@@ -1,7 +1,12 @@
 package algorithms.validation;
 
+/**
+ * Validation.
+ * Find accuracy of results.
+ * @author Alex, Fabian
+ *
+ */
 public class Validation {
-
 	private static double ROSENBROCK = 0;
 	private static double RASTRIGIN = 0;
 
@@ -9,6 +14,12 @@ public class Validation {
 		return -39.16617 * dimension;
 	}
 
+	/**
+	 * Calculate the accuracy of the value found.
+	 * @param fv
+	 * @param type
+	 * @return
+	 */
 	public static double validate(double fv, int type){
 		switch (type) {
 		case 1:

@@ -37,11 +37,6 @@ public class Sender {
 			for(SolutionCandidate c : solutionCandidates) {
 				String message = createMsg(c);
 				connector.getChannel().basicPublish("", Connector.INQUEUE, null, message.getBytes());
-                /*stop++;
-				if(stop == 15900){
-					sleep(2000);
-					stop = 0;
-				}*/
 			}
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +45,7 @@ public class Sender {
 	
 	/**
 	 * Create JSON object for message.
-	 * @param c
+	 * @param c (solution candidate)
 	 * @return
 	 */
 	private String createMsg(SolutionCandidate c){

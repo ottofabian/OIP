@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * Class RabbitMqClient.
  * Encapsulates functionality to communicate
  * with the RabbitMQ queue.
- * @author Daniel, Fabian
+ * @author Alex, Daniel, Fabian
  *
  */
 public class RabbitMqClient {
@@ -31,8 +31,10 @@ public class RabbitMqClient {
 	/**
 	 * Send solution candidates
 	 * to RabbitMQ and wait for result.
-	 * @param c
-	 * @param pop
+	 * Increase result value if the value is not feasible.
+	 * @param c		(solution candidate)
+	 * @param pop	(population)
+	 * @param checkFeasible
 	 * @return
 	 */
 	public ArrayList<SolutionCandidate> sendAndWaitForResult(ArrayList<SolutionCandidate> c, int pop, boolean checkFeasible) {

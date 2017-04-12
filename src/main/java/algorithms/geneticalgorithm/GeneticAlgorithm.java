@@ -1,8 +1,6 @@
 package algorithms.geneticalgorithm;
 
-import algorithms.datacontainer.SolutionCandidate;
-import algorithms.validation.Validation;
-import rabbitmq.RabbitMqClient;
+import static java.lang.StrictMath.exp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,11 +9,12 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.lang.StrictMath.exp;
+import algorithms.datacontainer.SolutionCandidate;
+import algorithms.validation.Validation;
+import rabbitmq.RabbitMqClient;
 
 /**
  * Genetic algorithm.
- *
  * @author Daniel, Fabian
  */
 @SuppressWarnings("all")
@@ -24,13 +23,17 @@ public class GeneticAlgorithm {
     //function type
     private final static int FTYPE = 2;
     private final Random r = new Random();
+    
     //dimension of function
     private final int DIMENSION;
+    
     //number of total iterations
     private final int ITERATIONS;
+    
     //search space limits
     private int UPPERLIMIT = 4;
     private int LOWERLIMIT = UPPERLIMIT / 2;
+    
     //mutation rates
     private double MUTATION = 0.3;
     private double MUTATION_RATE = 0.08;
@@ -40,6 +43,8 @@ public class GeneticAlgorithm {
 
     /**
      * Constructor.
+     * @Param iter 	(number of iterations)
+     * @Param dim	(dimension)
      */
     public GeneticAlgorithm(int iter, int dim) {
         ITERATIONS = iter;
@@ -48,11 +53,10 @@ public class GeneticAlgorithm {
 
     /**
      * Start the evolution.
-     *
+     * This method uses either mutation or crossover operations.
      * @param pop      (number of population members => 2^x)
      * @param part_pec (percentage for partitioning)
      * @return
-     * @para iter (number of iterations)
      */
     public SolutionCandidate evolveXOR(int pop, double tournament_perc) {
 
@@ -110,8 +114,10 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * @param pop
-     * @param part_perc
+     * Start the evolution.
+     * This method uses mutation and crossover operations.
+     * @param pop		(number of population members => 2^x)
+     * @param part_pec 	(percentage for partitioning)
      * @return
      */
     public SolutionCandidate evolveOR(int pop, double part_perc) {
@@ -138,54 +144,16 @@ public class GeneticAlgorithm {
                     int rand = (int) (Math.random() * part_index);
 
                     sc = mateMultiPointXover(c.get(j), c.get(rand));
+                    // sc = mateAvg(c.get(j), c.get(rand));
+                    
                     if (Math.random() < MUTATION) {
                         sc = mutateRandom(sc, MUTATIONS_PER_CREATURE);
+                        // sc = mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
+                        // sc = mateSinglePointXover(c.get(j), c.get(rand));
                     }
-
-                    /*switch ((int) (Math.random() * 3)) {
-
-                        case 0:
-                            sc = mateAvg(c.get(j), c.get(rand));
-                            break;
-
-                        case 1:
-                            sc = mateSinglePointXover(c.get(j), c.get(rand));
-                            break;
-
-                        default:
-                            sc = mateMultiPointXover(c.get(j), c.get(rand));
-                            break;
-                    }
-
-                    switch ((int) (Math.random() * 3)) {
-
-                        case 0:
-                            sc = mutateMoreRandom(sc);
-                            break;
-
-                        case 1:
-                            if (Math.random() < MUTATION) {
-                                sc = mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
-                            }
-                            break;
-
-                        default:
-                            if (Math.random() < MUTATION) {
-                                sc = mutateRandom(sc, MUTATIONS_PER_CREATURE);
-                            }
-                            break;
-                    }*/
-
-
-                    // Random number for decision between mutation or not
-                    /*if (Math.random() < MUTATION) {
-                        sc = mutateGauss(sc, MUTATIONS_PER_CREATURE);
-						sc = mutateSwitchN(sc, MUTATIONS_PER_CREATURE);
-						sc = mutateRandom(sc, MUTATIONS_PER_CREATURE);
-					}*/
+                    // sc = mutateRandomVariable(sc);
 
                     c.set(i, sc);
-
                     if (++i >= pop) break;
                 }
             }
@@ -214,7 +182,6 @@ public class GeneticAlgorithm {
 
     /**
      * Initialize population randomly.
-     *
      * @param pop (number of population members)
      * @return
      */
@@ -224,34 +191,18 @@ public class GeneticAlgorithm {
         for (int i = 0; i < pop; i++) {
             // random vector x
             ArrayList<Double> t = new ArrayList<>();
-            /*t.add(2.0);
-            t.add(2.0);
-            t.add(0.6290);
-            t.add(1.0);
-            t.add(1.2);
-            t.add(2.0);
-            t.add(1.89);
-            t.add(2.0);
-            t.add(1.0);
-            t.add(2.32);
-            t.add(2.8);
-            t.add(1.01);
-            t.add(2.0);
-            t.add(2.0);
-            t.add(1.54);
-            t.add(2.0);
-            t.add(3.8);*/
             for (int j = 0; j < DIMENSION; j++) {
                 t.add((Math.random() * 2));
             }
+            
             c.add(new SolutionCandidate(t));
         }
+        
         return c;
     }
 
     /**
      * Create a child solution candidate.
-     *
      * @param mateOne
      * @param mateTwo
      * @return
@@ -262,17 +213,16 @@ public class GeneticAlgorithm {
         // weighted average
         for (int i = 0; i < mateOne.getSolutionVector().size(); i++) {
             x.add(
-                    (mateOne.getSolutionVector().get(i) * mateTwo.getResultValue()
-                            + mateTwo.getSolutionVector().get(i) * mateOne.getResultValue())
-                            / (mateTwo.getResultValue() + mateOne.getResultValue())
+	            (mateOne.getSolutionVector().get(i) * mateTwo.getResultValue()
+                + mateTwo.getSolutionVector().get(i) * mateOne.getResultValue())
+                / (mateTwo.getResultValue() + mateOne.getResultValue())
             );
         }
         return new SolutionCandidate(x);
     }
 
     /**
-     * Mate two candidates using a crossover strategy.
-     *
+     * Mate two candidates using a single point crossover strategy.
      * @param mateOne
      * @param mateTwo
      * @return
@@ -304,12 +254,12 @@ public class GeneticAlgorithm {
     }
 
     /**
+     * Mate two candidates using a multi point crossover strategy.
      * @param mateOne
      * @param mateTwo
      * @return
      */
     private SolutionCandidate mateMultiPointXover(SolutionCandidate mateOne, SolutionCandidate mateTwo) {
-
         ArrayList<Double> v1 = mateOne.getSolutionVector();
         ArrayList<Double> v2 = mateTwo.getSolutionVector();
         ArrayList<Double> result = new ArrayList<>();
@@ -321,39 +271,39 @@ public class GeneticAlgorithm {
                 result.add(v2.get(i));
             }
         }
+        
         return new SolutionCandidate(result);
     }
 
     /**
      * Mutate by using gaussian random numbers.
-     *
-     * @param c
-     * @param Random
+     * @param c			(solution candidate)
+     * @param n			(number of elements to be mutated)
      * @return
      */
     private SolutionCandidate mutateGauss(SolutionCandidate c, int n) {
         ArrayList<Double> t = c.getSolutionVector();
-
         ArrayList<Double> nw = new ArrayList<>();
 
-        for (Double d : t) {
-            nw.add(d);
-        }
+        for (Double d : t) nw.add(d);
 
+        // generate n uniformly distributed random numbers
         List<Integer> pos = Stream
-                .generate(() -> (int) (Math.random() * DIMENSION))
-                .distinct()
-                .limit(n)
-                .collect(Collectors.toList());
+	        .generate(() -> (int) (Math.random() * DIMENSION))
+	        .distinct()
+	        .limit(n)
+	        .collect(Collectors.toList());
 
         for (int i = 0; i < pos.size(); i++) {
             int idx = pos.get(i);
             double newValue = t.get(idx) + next_gaussian();
+            
             if (newValue > UPPERLIMIT / 2) {
                 newValue = UPPERLIMIT;
             } else if (newValue < 0) {
                 newValue = 0;
             }
+            
             nw.set(idx, newValue);
         }
 
@@ -362,27 +312,23 @@ public class GeneticAlgorithm {
 
     /**
      * Mutate by switching elements.
-     *
-     * @param c
-     * @param n
+     * @param c (solution candidate)
+     * @param n (number of elements to be switched)
      */
     public SolutionCandidate mutateSwitchN(SolutionCandidate c, int n) {
         ArrayList<Double> t = c.getSolutionVector();
-
         ArrayList<Double> nw = new ArrayList<>();
 
-        for (Double d : t) {
-            nw.add(d);
-        }
+        for (Double d : t) nw.add(d);
 
-        //Generate n uniformly distributed random numbers
+        // generate n uniformly distributed random numbers
         List<Integer> pos = Stream
-                .generate(() -> (int) (Math.random() * DIMENSION))
-                .distinct()
-                .limit(n)
-                .collect(Collectors.toList());
+            .generate(() -> (int) (Math.random() * DIMENSION))
+            .distinct()
+            .limit(n)
+            .collect(Collectors.toList());
 
-        //switch positions
+        // switch positions
         for (int i = 0; i < pos.size(); i += 2) {
             int idx1 = pos.get(i);
             int idx2 = pos.get(i + 1);
@@ -396,32 +342,31 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * @param c
-     * @param n
+     * Mutate by using uniformly distributed random numbers.
+     * The number of mutations has to be specified.
+     * @param c (solution candidate)
+     * @param n (number of elements to be mutated)
      * @return
      */
     private SolutionCandidate mutateRandom(SolutionCandidate c, int n) {
         ArrayList<Double> t = c.getSolutionVector();
-
         ArrayList<Double> nw = new ArrayList<>();
 
-        for (Double d : t) {
-            nw.add(d);
-        }
+        for (Double d : t) nw.add(d);
 
-        //Generate n uniformly distributed random numbers
+        // generate n uniformly distributed random numbers
         List<Integer> pos = Stream
-                .generate(() -> (int) (Math.random() * DIMENSION))
-                .distinct()
-                .limit(n)
-                .collect(Collectors.toList());
+            .generate(() -> (int) (Math.random() * DIMENSION))
+            .distinct()
+            .limit(n)
+            .collect(Collectors.toList());
 
-        //Generate n uniformly distributed random numbers
+        // generate n uniformly distributed random numbers
         List<Double> val = Stream
-                .generate(() -> ((Math.random() * UPPERLIMIT)))
-                .distinct()
-                .limit(n)
-                .collect(Collectors.toList());
+            .generate(() -> ((Math.random() * UPPERLIMIT)))
+            .distinct()
+            .limit(n)
+            .collect(Collectors.toList());
 
         for (int i = 0; i < pos.size(); i++) {
             nw.set(pos.get(i), val.get(i));
@@ -430,18 +375,16 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * @param c
-     * @param n
+     * Mutate by using uniformly distributed random numbers.
+     * The number of mutations does not have to be specified.
+     * @param c (solution candidate)
      * @return
      */
-    private SolutionCandidate mutateMoreRandom(SolutionCandidate c) {
+    private SolutionCandidate mutateRandomVariable(SolutionCandidate c) {
         ArrayList<Double> t = c.getSolutionVector();
-
         ArrayList<Double> nw = new ArrayList<>();
 
-        for (Double d : t) {
-            nw.add(d);
-        }
+        for (Double d : t) nw.add(d);
 
         for (int i = 0; i < nw.size(); i++) {
             if (Math.random() < MUTATION_RATE) {
@@ -452,28 +395,28 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * Random Gaussian value for Gaussian mutation
-     *
+     * Gaussian random numbers.
      * @return
      */
     private double next_gaussian() {
-        // Generate an initial [-1,1] gaussian distribution
-        // Quantize to step size 0.001
+        // generate an initial [-1,1] gaussian distribution
+        // quantize to step size 0.001
         return Math.rint((r.nextGaussian()) * 1000.0) * 0.001;
     }
 
     /**
+     * Change mutation rate over time.
      * @param iter
      */
     private void adjustMutation(int iter) {
-        // This funtion is optimized for iter = 1000
+        // this funtion is optimized for iter = 1000
         Double value = exp((-((ITERATIONS - iter) * 0.0009) - 1));
         System.out.println("Mutation rate: " + value);
         MUTATION = value;
     }
 
 	/*
-	 * Test functions.
+	 * Local test functions.
 	 */
 
 //	/**
