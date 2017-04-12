@@ -1,0 +1,164 @@
+\documentclass[t,8pt]{beamer}
+\input{config_styles/usepackages}
+\input{config_styles/commands}
+
+% Select theme
+\usetheme{mystyle}
+
+% Credentials
+\title[Musterthema]{Optimierung industrieller Prozesse}
+\author{Gedeon, Fabian, Alex, Philip, Daniel}
+\date{12.04.2017}
+\institute{DHBW Mannheim}
+
+% Number of levels in toc
+\dwDeepToc{false}
+
+% List of figures/tables
+\dwLofLot{false}
+
+\begin{document}
+
+\dwPrintTitle{images/evolution}{images/logo_dhbw}
+\dwPrintToc{1.2}
+
+\dwSection{Betrachtete Algorithmen}
+
+% ================================================================
+\begin{dwHeaderFrame}{Genetischer Algorithmus}
+	\begin{dwItemize}
+		\item Funktionsweise ist der Natur entlehnt.
+		\item Initialisierung einer Population.
+		\item Bewertung der Individuen mithilfe einer Fitnessfunktion.
+		\item \textbf{Operationen:}
+
+		\begin{dwInnerItemize}
+			\item Selektion (der Eltern)
+			\item Crossover
+			\item Mutation
+			\item Ersetzung
+		\end{dwInnerItemize}
+
+		\item \textbf{Parameter:}
+
+		\begin{dwInnerItemize}
+			\item Popualtionsgröße \& Generationsanzahl
+			\item Mutationsrate 
+			\item Crossoverrate  
+		\end{dwInnerItemize}
+
+	\end{dwItemize}
+\end{dwHeaderFrame}
+
+% ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Funktionsweise des Algorithmus}
+
+	\dwFramedFigure{\includegraphics[scale=0.9]{images/genetic_algo}}{Funktionsweise des genetischen Algorithmus}{fig:genetci-algo}
+\end{dwFrame}
+
+% ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Realisierung}
+
+	\begin{dwItemize}
+		\item Crossover-Strategien: 
+		
+			\begin{dwInnerItemize}
+				\item \textbf{Gewichteter Durchschnitt:} Berechnung des gewichteten Durchschnitts (basierend auf der Fitness 								der Eltern) für jedes Gen des Kindes.
+				\item \textbf{Singlepoint Crossover:} Kind erhält zwei unterschiedliche Teile des Vektors der Eltern. Trennung 								an einem Punkt. 
+				\item \textbf{Multipoint Crossover:} Kind erhält beliebig viele unterschiedliche Teile des Vektors der Eltern. 														Trennung an beliebig vielen Punkten. 
+			\end{dwInnerItemize}
+		
+		\item Mutations-Strategien: 
+		
+			\begin{dwInnerItemize}
+				\item \textbf{Vertauschen zweier Parameter:} Mutationswahrscheinlichkeit für gesamtes Individuum. 										Vertauschen einer festen Anzahl von Genen.
+				\item \textbf{Mutation mit fester Anzahl:} Mutationswahrscheinlichkeit für gesamtes Individuum.
+							Zufällige Werte für eine feste Anzahl von Genen.
+				\item \textbf{Mutation mit variabler Anzahl:} Mutationswahrscheinlichkeit für jedes Gene einzeln.
+							Zufällige Werte für eine feste Anzahl von Genen.
+				\item \textbf{Gauss Mutation:} Mutationswahrscheinlichkeit für gesamtes Individuum. Addieren eines Gauss-								verteilten Zufallswertes.
+			\end{dwInnerItemize}		
+		
+	\end{dwItemize}
+\end{dwFrame}
+
+
+% ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Anpassungen}
+
+	\begin{dwItemize}
+		\item Anpassung der Mutationsrate über $e$-Funktion (Optimierung für 5000 Iterationen):\\
+			\begin{equation*}
+				e^{-x*0.0009-1}
+			\end{equation*}
+		\item Werte mit \glqq  not feasible\grqq{} werden mit einer Strafe von 1.000.000 für den Fitnesswert versehen. 
+		\item Versuch mit fixer Anzahl an Mutationen konsistente Änderungen und Data Space Exploration zu erreichen. 
+		\item Truncation Selection mit 25\% der Population 
+	\end{dwItemize}
+		\vspace{2mm}
+	\dwHeader{Parameter}
+	\begin{dwItemize}
+		\item Populationsgröße: $2^{13}$
+		\item Generationsanzahl: 5000
+		\item Mutationsrate (variabel): 0.08
+		\item Mutationsrate (fix): 0.3 für 4 Individuen
+	\end{dwItemize}
+		
+\end{dwFrame}
+
+% ================================================================
+\begin{dwHeaderFrame}{Particle Swarm Algorithmus}
+	\begin{dwItemize}
+		\item Mehrere Partikel
+	\end{dwItemize}
+\end{dwHeaderFrame}
+
+% ================================================================
+\dwSection{Erkenntnisse}
+\begin{dwHeaderFrame}{Genetischer Algorithmus}
+	\begin{dwItemize}
+		\item Gute Näherung der Testfunktionen von Stiblinski-Tang und Rastrigin.
+		\item Schlechte Näherung der Testfunktion von Rosenbrock.
+		\item Gute Näherung der unbekannten Funktion
+		\item Ergebnisse: \url{https://github.com/DaWe1992/OIP/blob/master/Results.md}
+		\item Keine Eignung für alle Optimierungsprobleme
+	\end{dwItemize}
+\end{dwHeaderFrame}
+% ================================================================
+
+\begin{dwHeaderFrame}{Particle Swarm Algorithmus}
+	\begin{dwItemize}
+		\item Gute Näherung der Testfunktionen von Rosenbrock
+		\item Gute Näherung der unbekannten Funktion
+	\end{dwItemize}
+\end{dwHeaderFrame}
+% ================================================================
+\dwSection{Kommunikation}
+\begin{dwHeaderFrame}{Anbindung an RabbitMQ}
+	\begin{dwItemize}
+		\item RabbitMQ Client kapselt Funktionalität von Sender und Receiver.
+		\item RabbitMQ Client bietet \glqq Send and Wait\grqq{} $\Longrightarrow$ Blockierender Aufruf.
+		\item Wiederverwendbarkeit für sämtlich Algorithmen.
+	\end{dwItemize}
+	\vspace{2mm}
+\dwHeader{Technische Limitation}
+	\begin{dwItemize}
+		\item Maximales Senden von 20k Nachrichten pro Sekunde.
+	\end{dwItemize}
+
+	\begin{center}
+		\includegraphics[scale=0.4]{images/rabbitmq}
+	\end{center}
+	
+\end{dwHeaderFrame}
+
+
+% ================================================================
+
+\end{document}
