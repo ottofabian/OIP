@@ -9,11 +9,11 @@
 - [Validation/Optimal values](#validationoptimal-values)
 
 ## Group members:
-- Alexander Baum
-- Gedeon Moritz
-- Philip Riecks
-- Fabian Otto
-- Daniel Wehner
+- [Alexander Baum](https://github.com/4lexBaum)
+- [Gedeon Moritz](https://github.com/GedeonMoritz)
+- [Philip Riecks](https://github.com/PharmaPhil)
+- [Fabian Otto](https://github.com/BoboDance)
+- [Daniel Wehner](https://github.com/DaWe1992)
 
 ---
 ## Docker
