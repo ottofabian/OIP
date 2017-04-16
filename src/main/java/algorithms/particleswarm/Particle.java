@@ -4,12 +4,11 @@ import java.util.UUID;
 import java.util.Vector;
 
 /**
- * Particle Object to represent a part of the swarm
+ * Particle object to represent a part of the swarm.
  * @author Philip & Gedeon
  *
  */
 public class Particle {
-
 
 	private ParticleSwarm swarm;
 	private Vector<Double> position;
@@ -18,6 +17,11 @@ public class Particle {
 	private Vector<Double> velocity;
 	private String solutionCandidateId;
 	
+	/**
+	 * Constructor.
+	 * @param position
+	 * @param swarm
+	 */
 	public Particle(Vector<Double> position, ParticleSwarm swarm) {
 		this.position = position;
 		this.particleBest = position;
@@ -28,7 +32,7 @@ public class Particle {
 
 	public void updateVelocity() {
 		velocity = addVectors(velocity, addVectors(multiplyVector(subtractVector(particleBest, position), (swarm.getC1() * Math.random())),
-				multiplyVector(subtractVector(swarm.getGlobalBest(), position), (swarm.getC2() * Math.random()))));
+			multiplyVector(subtractVector(swarm.getGlobalBest(), position), (swarm.getC2() * Math.random()))));
 	}
 
 	public void updatePosition() {
