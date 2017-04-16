@@ -25,6 +25,7 @@
 \dwSection{Betrachtete Algorithmen}
 
 % ================================================================
+
 \begin{dwHeaderFrame}{Genetischer Algorithmus}
 	\begin{dwItemize}
 		\item Funktionsweise ist der Natur entlehnt.
@@ -43,8 +44,8 @@
 
 		\begin{dwInnerItemize}
 			\item Popualtionsgröße \& Generationsanzahl
-			\item Mutationsrate 
-			\item Crossoverrate  
+			\item Mutationsrate
+			\item Crossoverrate
 		\end{dwInnerItemize}
 
 	\end{dwItemize}
@@ -64,16 +65,16 @@
 	\dwHeader{Realisierung}
 
 	\begin{dwItemize}
-		\item Crossover-Strategien: 
-		
+			\item Crossover-Strategien:
+
 			\begin{dwInnerItemize}
 				\item \textbf{Gewichteter Durchschnitt:} Berechnung des gewichteten Durchschnitts (basierend auf der Fitness 								der Eltern) für jedes Gen des Kindes.
-				\item \textbf{Singlepoint Crossover:} Kind erhält zwei unterschiedliche Teile des Vektors der Eltern. Trennung 								an einem Punkt. 
-				\item \textbf{Multipoint Crossover:} Kind erhält beliebig viele unterschiedliche Teile des Vektors der Eltern. 														Trennung an beliebig vielen Punkten. 
+				\item \textbf{Singlepoint Crossover:} Kind erhält zwei unterschiedliche Teile des Vektors der Eltern. Trennung 								an einem Punkt.
+				\item \textbf{Multipoint Crossover:} Kind erhält beliebig viele unterschiedliche Teile des Vektors der Eltern. 														Trennung an beliebig vielen Punkten.
 			\end{dwInnerItemize}
-		
-		\item Mutations-Strategien: 
-		
+
+			\item Mutations-Strategien:
+
 			\begin{dwInnerItemize}
 				\item \textbf{Vertauschen zweier Parameter:} Mutationswahrscheinlichkeit für gesamtes Individuum. 										Vertauschen einer festen Anzahl von Genen.
 				\item \textbf{Mutation mit fester Anzahl:} Mutationswahrscheinlichkeit für gesamtes Individuum.
@@ -81,8 +82,8 @@
 				\item \textbf{Mutation mit variabler Anzahl:} Mutationswahrscheinlichkeit für jedes Gene einzeln.
 							Zufällige Werte für eine feste Anzahl von Genen.
 				\item \textbf{Gauss Mutation:} Mutationswahrscheinlichkeit für gesamtes Individuum. Addieren eines Gauss-								verteilten Zufallswertes.
-			\end{dwInnerItemize}		
-		
+			\end{dwInnerItemize}
+
 	\end{dwItemize}
 \end{dwFrame}
 
@@ -97,22 +98,26 @@
 			\begin{equation*}
 				e^{-x*0.0009-1}
 			\end{equation*}
-		\item Werte mit \glqq  not feasible\grqq{} werden mit einer Strafe von 1.000.000 für den Fitnesswert versehen. 
-		\item Versuch mit fixer Anzahl an Mutationen konsistente Änderungen und Data Space Exploration zu erreichen. 
-		\item Truncation Selection mit 25\% der Population 
+		\item Werte mit \glqq  not feasible\grqq{} werden mit einer Strafe von 1.000.000 für den Fitnesswert versehen.
+		\item Versuch mit fixer Anzahl an Mutationen konsistente Änderungen und Data Space Exploration zu erreichen.
+		\item Truncation Selection mit 25\% der Population
 	\end{dwItemize}
-		\vspace{2mm}
+
+	\vspace{2mm}
+
 	\dwHeader{Parameter}
+
 	\begin{dwItemize}
 		\item Populationsgröße: $2^{13}$
 		\item Generationsanzahl: 5000
 		\item Mutationsrate (variabel): 0.08
 		\item Mutationsrate (fix): 0.3 für 4 Individuen
 	\end{dwItemize}
-		
+
 \end{dwFrame}
 
 % ================================================================
+
 \begin{dwHeaderFrame}{Particle Swarm Algorithmus}
 	\begin{dwItemize}
 		\item Mehrere Partikel
@@ -120,6 +125,7 @@
 \end{dwHeaderFrame}
 
 % ================================================================
+
 \dwSection{Erkenntnisse}
 \begin{dwHeaderFrame}{Genetischer Algorithmus}
 	\begin{dwItemize}
@@ -130,6 +136,7 @@
 		\item Keine Eignung für alle Optimierungsprobleme
 	\end{dwItemize}
 \end{dwHeaderFrame}
+
 % ================================================================
 
 \begin{dwHeaderFrame}{Particle Swarm Algorithmus}
@@ -138,16 +145,21 @@
 		\item Gute Näherung der unbekannten Funktion
 	\end{dwItemize}
 \end{dwHeaderFrame}
+
 % ================================================================
+
 \dwSection{Kommunikation}
+
 \begin{dwHeaderFrame}{Anbindung an RabbitMQ}
 	\begin{dwItemize}
 		\item RabbitMQ Client kapselt Funktionalität von Sender und Receiver.
 		\item RabbitMQ Client bietet \glqq Send and Wait\grqq{} $\Longrightarrow$ Blockierender Aufruf.
 		\item Wiederverwendbarkeit für sämtlich Algorithmen.
 	\end{dwItemize}
+
 	\vspace{2mm}
-\dwHeader{Technische Limitation}
+	\dwHeader{Technische Limitation}
+
 	\begin{dwItemize}
 		\item Maximales Senden von 20k Nachrichten pro Sekunde.
 	\end{dwItemize}
@@ -155,9 +167,8 @@
 	\begin{center}
 		\includegraphics[scale=0.4]{images/rabbitmq}
 	\end{center}
-	
-\end{dwHeaderFrame}
 
+\end{dwHeaderFrame}
 
 % ================================================================
 
