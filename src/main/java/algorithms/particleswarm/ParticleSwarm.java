@@ -10,7 +10,7 @@ import java.util.Vector;
 /**
  * Implementation of the Particle Swarm Algorithm
  * 
- * @author Philip & Gedeon Comments incoming when bug is fixed
+ * @author Philip & Gedeon
  */
 
 public class ParticleSwarm {
@@ -22,7 +22,7 @@ public class ParticleSwarm {
 	private int iterations;
 	private int c1;
 	private int c2;
-	private final static int FTYPE = 1;
+	private final static int FTYPE = 3;
 
 	public ParticleSwarm(int iterations, int amountOfParticles, int c1, int c2) {
 		this.iterations = iterations;
@@ -41,9 +41,9 @@ public class ParticleSwarm {
 	public void initSwarm() {
 		for (int i = 0; i < swarm.length; i++) {
 			Vector<Double> randomVector = new Vector<>();
-			// init the position with seventy random values between -5 and 5
+			// init the position with seventy random values
 			for(int j = 0; j < 17; j++){
-				randomVector.addElement(Math.random() * 10 - 5);
+				randomVector.addElement(Math.random() * 2);
 			}
 			Particle p = new Particle(randomVector, this);
 			// initialize the SolutionCandidate ArrayList to map the particles
@@ -57,14 +57,9 @@ public class ParticleSwarm {
 
 	public void letTheSwarmFly() {
 		for (int i = 0; i < iterations; i++) {
-			// test the swarm with a local java function
-			/*
-			 * for(int j = 0; j < swarm.length; j++){ swarm[j].updateFitness();
-			 * }
-			 */
-
+	
             // toDo: Handle the Feasibility some how and add as third param
-            particleSolutions = RabbitMqClient.getInstance().sendAndWaitForResult(particleSolutions, particleSolutions.size(), false);
+            particleSolutions = RabbitMqClient.getInstance().sendAndWaitForResult(particleSolutions, particleSolutions.size(), true);
             mapSwarmToSolutionCandidatesResults();
 
 			for (int j = 0; j < swarm.length; j++) {
@@ -75,12 +70,11 @@ public class ParticleSwarm {
 			}
 
 			System.out.println("GlobalBestFitness from Iteration " + (i + 1) + ": " + globalBestFitness);
+			System.out.println(globalBest);
 
 			for (int j = 0; j < swarm.length; j++) {
 				swarm[j].updateVelocity();
 				swarm[j].updatePosition();
-				// System.out.println("Position of particle " + j + " " +
-				// swarm[j].getPosition() + " " + swarm[j].getFitness());
 			}
 			
 			mapSwarmToSolutionCandidates();
@@ -95,6 +89,7 @@ public class ParticleSwarm {
 			for(int j = 0; j < swarm.length; j++){
 				if(particleSolutions.get(i).getSolutionCandidateId().equals(swarm[j].getSolutionCandidateId())){
 					swarm[j].setFitness(particleSolutions.get(i).getResultValue());
+					//System.out.println(particleSolutions.get(i).getResultValue());
 				}
 			}
 		}
