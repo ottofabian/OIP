@@ -6,7 +6,7 @@
 \usetheme{mystyle}
 
 % Credentials
-\title[Musterthema]{Optimierung industrieller Prozesse}
+\title[Optimierung industrieller Prozesse]{Optimierung industrieller Prozesse}
 \author{Gedeon, Fabian, Alex, Philip, Daniel}
 \date{12.04.2017}
 \institute{DHBW Mannheim}
@@ -119,11 +119,61 @@
 
 \begin{dwHeaderFrame}{Particle Swarm Algorithmus}
 	\begin{dwItemize}
-		\item Mehrere Partikel
+		\item Vorbild dieses Algorithmus is das biologische Schwarmverhalten (z.B. Vögel oder Bienen)
+		\item Die Population bewegt sich durch den Suchraum und orientiert sich am aktuell besten Individuum 
+		\item Bewertung der Individuen mithilfe einer Fitnessfunktion.
+		\item \textbf{Operationen:}
+
+		\begin{dwInnerItemize}
+			\item Initialisierung des Schwarms
+			\item Fitnessfunktion
+			\item Anpassen der Geschwindigkeit (Velocity)
+			\item Schwarmoptimum bestimmen
+		\end{dwInnerItemize}
+		\item \textbf{Parameter:}
+		\begin{dwInnerItemize}
+			\item Populationsgröße
+			\item Lokale Optimierung (C1)
+			\item Globale Optimierung (C2)
+		\end{dwInnerItemize}
+
 	\end{dwItemize}
+
 \end{dwHeaderFrame}
 
 % ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Funktionsweise des Algorithmus}
+
+	\dwFramedFigure{\includegraphics[scale=0.35]{images/pso}}{Funktionsweise des Particle Swarm Algorithmus}{fig:pso}
+\end{dwFrame}
+
+% ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Vorgehensweise}
+	\dwFramedFigure{\includegraphics[scale=0.33]{images/pso_algorithm}}{Vorgehensweise des Particle Swarm Algorithmus in Pseudo Code}{fig:pso}
+
+\end{dwFrame}
+
+
+% ================================================================
+
+\begin{dwFrame}
+	\dwHeader{Parameter}
+
+	\begin{dwItemize}
+		\item Populationsgröße: $10^{4}$
+		\item Iterationen: 1000 (Abbruchbedingung)
+		\item C1: 1
+		\item C2: 2
+	\end{dwItemize}
+
+\end{dwFrame}
+
+% ================================================================
+
 
 \dwSection{Erkenntnisse}
 \begin{dwHeaderFrame}{Genetischer Algorithmus}
@@ -140,8 +190,13 @@
 
 \begin{dwHeaderFrame}{Particle Swarm Algorithmus}
 	\begin{dwItemize}
+		\item Nachvollziehbares Vorgehen
 		\item Gute Näherung der Testfunktionen von Rosenbrock
 		\item Gute Näherung der unbekannten Funktion
+		\item Ergebnisse: \url{https://github.com/DaWe1992/OIP/blob/master/Results.md}
+
+		\item Im Gegensatz zum GA aktualisieren die Partikel ihre Kennzahlen selbstständig und verfügen über einen internen Speicher für das lokale Optimum
+		\item Orientierung im Gegensatz zum GA nur an einem Indikator (Global Best) -> one way information sharing mechanism
 	\end{dwItemize}
 \end{dwHeaderFrame}
 
