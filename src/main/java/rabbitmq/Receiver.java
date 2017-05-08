@@ -70,6 +70,9 @@ public class Receiver implements Runnable {
 		}
 	}
 
+	/**
+	 * Start the thread.
+	 */
 	@Override
 	public void run() {
 		receive();

@@ -22,8 +22,8 @@ public class SimulatedAnnealing {
 	
 	/**
 	 * Get probability for accepting the new value.
-	 * @param d (delta new value <-> old value)
-	 * @param t (current temperature)
+	 * @param d 		(delta new value <-> old value)
+	 * @param t 		(current temperature)
 	 * @return
 	 */
 	private static double acceptance(double d, double t) {
@@ -35,12 +35,12 @@ public class SimulatedAnnealing {
 	
 	/**
 	 * Start the simulated annealing process.
-	 * @param x (start value for x)
-	 * @param t (initial temperature)
-	 * @param t_min (minimum temperature)
-	 * @param cool (cooling rate)
-	 * @param l (number of iterations with same temperature)
-	 * @return best found value
+	 * @param x 		(start value for x)
+	 * @param t 		(initial temperature)
+	 * @param t_min 	(minimum temperature)
+	 * @param cool 		(cooling rate)
+	 * @param l 		(number of iterations with same temperature)
+	 * @return best value found
 	 */
 	private static double start(double x, double t, double t_min, double cool, int l) {
 		while(t >= t_min) {

@@ -1,19 +1,30 @@
-# Optimization of industrial processes WWI 14SEA
+# Optimization of industrial processes WI 14 SE A
 
-Group members:
-- Alexander Baum
-- Gedeon Moritz
-- Philip Riecks
-- Fabian Otto
-- Daniel Wehner
+## Overview
 
+- [Group members](#group-members)
+- [Docker](#docker)
+- [Algorithms](#algorithms)
+- [Results](#results)
+- [Validation/Optimal values](#validationoptimal-values)
+
+---
+## Group members:
+- [Alexander Baum](https://github.com/4lexBaum)
+- [Gedeon Moritz](https://github.com/GedeonMoritz)
+- [Philip Riecks](https://github.com/PharmaPhil)
+- [Fabian Otto](https://github.com/BoboDance)
+- [Daniel Wehner](https://github.com/DaWe1992)
+
+---
 ## Docker
 - https://hub.docker.com/r/jreichwald/dhbw_oip/
 - [docker-compose.yml](docker-compose.yml)
 - [RabbitMQ Client](http://127.0.0.1:15672/)
   - User: guest
   - Password: guest
-  
+
+---
 ## Algorithms
 
 Three algorithms were contemplated:
@@ -29,12 +40,12 @@ Three algorithms were contemplated:
 ### Simulated Annealing
 - [Code](/src/main/java/algorithms/simulatedannealing/SimulatedAnnealing.java)
 
+---
 ## Results
 
-The best values found for each function can be viewed here:
+The best values found for each function can be viewed here: [Results](https://github.com/DaWe1992/OIP/blob/master/Results.md)
 
-- [Results](https://github.com/DaWe1992/OIP/blob/master/results)
-
+---
 ## Validation/Optimal values
 
 ### Rosenbrock

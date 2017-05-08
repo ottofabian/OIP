@@ -30,6 +30,7 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 		this.solutionCandidateId = solutionCandidateId;
 		this.solutionVector = solutionVector;
 	}
+	
 	@Override
 	public int compareTo(SolutionCandidate o) {
 		return Double.compare(this.resultValue, o.getResultValue());
@@ -62,5 +63,4 @@ public class SolutionCandidate implements Comparable<SolutionCandidate> {
 	public boolean isEvaluated() {
 		return isEvaluated;
 	}
-
 }
